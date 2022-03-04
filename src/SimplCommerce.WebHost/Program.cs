@@ -23,16 +23,17 @@ using SimplCommerce.Module.Localization.TagHelpers;
 using SimplCommerce.WebHost.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 ConfigureService();
 var app = builder.Build();
 Configure();
 app.Run();
 
-void ConfigureService() 
+void ConfigureService()
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Configuration.AddEntityFrameworkConfig(options =>
-        options.UseSqlServer(connectionString));
+        options.UseNpgsql(connectionString));
 
     GlobalConfiguration.WebRootPath = builder.Environment.WebRootPath;
     GlobalConfiguration.ContentRootPath = builder.Environment.ContentRootPath;
@@ -81,7 +82,7 @@ void ConfigureService()
 }
 
 void Configure()
-    { 
+{
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
