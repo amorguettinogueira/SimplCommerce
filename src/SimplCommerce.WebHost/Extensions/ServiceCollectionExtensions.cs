@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,13 +12,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using SimplCommerce.Infrastructure;
 using SimplCommerce.Infrastructure.Modules;
 using SimplCommerce.Infrastructure.Web.ModelBinders;
@@ -25,7 +26,6 @@ using SimplCommerce.Module.Core.Data;
 using SimplCommerce.Module.Core.Extensions;
 using SimplCommerce.Module.Core.Models;
 using SimplCommerce.WebHost.IdentityServer;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace SimplCommerce.WebHost.Extensions
 {
@@ -37,7 +37,7 @@ namespace SimplCommerce.WebHost.Extensions
         {
             foreach (var module in _modulesConfig.GetModules())
             {
-                if(!module.IsBundledWithHost)
+                if (!module.IsBundledWithHost)
                 {
                     TryLoadModuleAssembly(module.Id, module);
                     if (module.Assembly == null)
@@ -93,7 +93,7 @@ namespace SimplCommerce.WebHost.Extensions
             (this IMvcBuilder mvc, IServiceCollection services)
         {
             return mvc.AddMvcOptions(o =>
-            {                
+            {
                 var factory = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
                 var L = factory.Create(null);
 
@@ -183,7 +183,8 @@ namespace SimplCommerce.WebHost.Extensions
                         OnRemoteFailure = ctx => HandleRemoteLoginFailure(ctx)
                     };
                 })
-                .AddLocalApi(JwtBearerDefaults.AuthenticationScheme, option => {
+                .AddLocalApi(JwtBearerDefaults.AuthenticationScheme, option =>
+                {
                     option.ExpectedScope = "api.simplcommerce";
                 });
 
@@ -219,7 +220,7 @@ namespace SimplCommerce.WebHost.Extensions
         public static IServiceCollection AddCustomizedDataStore(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContextPool<SimplDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly("SimplCommerce.WebHost")));
             return services;
         }
