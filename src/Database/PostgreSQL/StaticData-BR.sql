@@ -6008,9 +6008,10 @@ SELECT s."Id", tmp.municipio, 'Cidade'
         ('São Paulo', 'Borá'),
         ('Minas Gerais', 'Serra da Saudade')) AS tmp (estado, municipio)
 INNER JOIN "Core_StateOrProvince" AS s
-	ON s."Code" = tmp.estado
+	ON s."Name" = tmp.estado
 	AND s."CountryId" = 'BR'
-LEFT JOIN "Core_District" AS d
-	ON d."StateOrProvinceId" = s."Id"
-	AND d."Name" = tmp.municipio
-WHERE d."Id" IS NULL;
+WHERE NOT EXISTS ( 
+	SELECT NULL
+	  FROM "Core_District" AS d
+	 WHERE d."StateOrProvinceId" = s."Id"
+	   AND d."Name" = tmp.municipio);
