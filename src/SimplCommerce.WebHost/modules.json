@@ -70,6 +70,11 @@
     "version": "1.0.0"
   },
   {
+    "id": "SimplCommerce.Module.PaymentERede",
+    "isBundledWithHost": true,
+    "version": "1.0.0"
+  },
+  {
     "id": "SimplCommerce.Module.PaymentPaypalExpress",
     "isBundledWithHost": true,
     "version": "1.0.0"
