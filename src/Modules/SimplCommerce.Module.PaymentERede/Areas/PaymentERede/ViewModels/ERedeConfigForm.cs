@@ -6,18 +6,21 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.ViewModels
     public class ERedeConfigForm
     {
         [Required]
-        public string PublicKey { get; set; }
+        public bool Sandbox { get; set; } = false;
 
         [Required]
-        public string PrivateKey { get; set; }
+        public string RedePV { get; set; }
 
         [Required]
-        public string MerchantId { get; set; }
+        public int QtdeParcelas { get; set; }
 
         [Required]
-        public bool IsProduction { get; set; } = false;
+        public double ValorMinimoParcelamento { get; set; }
 
-        [JsonIgnore]
-        public string Environment { get { return IsProduction ? "production" : "sandbox"; } }
+        [Required]
+        public string RedeToken { get; set; }
+
+        [Required]
+        public string SoftDescriptor { get; set; }
     }
 }

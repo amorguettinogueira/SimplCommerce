@@ -4,13 +4,17 @@ namespace SimplCommerce.Module.PaymentERede.Services
 {
     public interface IERedeConfiguration
     {
-        string Environment { get; }
+        bool Sandbox { get; }
 
-        string MerchantId { get; }
+        string RedePV { get; }
 
-        string PublicKey { get; }
+        int QtdeParcelas { get; }
 
-        string PrivateKey { get; }
+        double ValorMinimoParcelamento { get; }
+
+        string RedeToken { get; }
+
+        string SoftDescriptor { get; }
 
         //Task<IBraintreeGateway> BraintreeGateway();
         Task<object> ERedeGateway();

@@ -3,6 +3,7 @@
         <EmbeddedResource Include="bundleconfig.json" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\..\..\..\erede-csharp\eRede\eRede\eRede.csproj" />
         <ProjectReference Include="..\..\SimplCommerce.Infrastructure\SimplCommerce.Infrastructure.csproj" />
         <ProjectReference Include="..\SimplCommerce.Module.Core\SimplCommerce.Module.Core.csproj" />
         <ProjectReference Include="..\SimplCommerce.Module.Payments\SimplCommerce.Module.Payments.csproj" />

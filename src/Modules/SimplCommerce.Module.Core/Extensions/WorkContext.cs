@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SimplCommerce.Infrastructure.Data;
-using SimplCommerce.Infrastructure;
-using SimplCommerce.Module.Core.Models;
 using Microsoft.Extensions.Configuration;
+using SimplCommerce.Infrastructure;
+using SimplCommerce.Infrastructure.Data;
+using SimplCommerce.Module.Core.Models;
 
 namespace SimplCommerce.Module.Core.Extensions
 {

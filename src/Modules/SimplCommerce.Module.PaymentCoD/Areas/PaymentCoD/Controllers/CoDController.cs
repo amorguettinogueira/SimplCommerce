@@ -42,7 +42,7 @@ namespace SimplCommerce.Module.PaymentCoD.Areas.PaymentCoD.Controllers
         {
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCartDetails(currentUser.Id);
-            if(cart == null)
+            if (cart == null)
             {
                 return NotFound();
             }
@@ -53,7 +53,7 @@ namespace SimplCommerce.Module.PaymentCoD.Areas.PaymentCoD.Controllers
                 return Redirect("~/checkout/payment");
             }
 
-            var calculatedFee = CalculateFee(cart);           
+            var calculatedFee = CalculateFee(cart);
             var orderCreateResult = await _orderService.CreateOrder(cart.Id, "CashOnDelivery", calculatedFee);
 
             if (!orderCreateResult.Success)

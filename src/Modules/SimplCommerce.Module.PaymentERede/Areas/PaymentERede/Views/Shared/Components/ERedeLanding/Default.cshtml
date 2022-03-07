@@ -22,15 +22,15 @@
                     </button>
                 </div>
                 <style>
-                    .card-container {
+                    .cardrede-container {
                         margin: 0px;
                     }
 
-                        .card-wrapper, .card-container > form {
+                        .cardrede-wrapper, .cardrede-container > form {
                             margin-bottom: 16px
                         }
 
-                        .card-container > form {
+                        .cardrede-container > form {
                             border-radius: 4px;
                             border: 1px solid #b5b5b5;
                             min-height: 140px;
@@ -46,108 +46,25 @@
                             visibility: visible;
                         }
 
-                    .card-header-text {
-                        color: #000;
-                        font-size: 16px;
-                        margin-left: 10px
-                    }
-
-                    .card-header {
+                    .cardrede-header {
                         border-bottom: 1px solid #b5b5b5;
-                        -webkit-flex-wrap: wrap;
-                        -ms-flex-wrap: wrap;
-                        flex-wrap: wrap;
-                        position: relative;
-                        padding-bottom: 12px;
+                        padding: 12px;
                     }
 
-                        .card-header .card-header-label {
-                            -webkit-box-align: center;
-                            -webkit-align-items: center;
-                            -ms-flex-align: center;
-                            align-items: center;
-                            display: -webkit-box;
-                            display: -webkit-flex;
-                            display: -ms-flexbox;
-                            display: flex;
-                            -webkit-box-flex: 1;
-                            -webkit-flex-grow: 1;
-                            -ms-flex-positive: 1;
-                            flex-grow: 1;
-                            flex-wrap: nowrap;
-                            align-content: center;
-                            justify-content: space-between;
-                        }
-
-                        .card-header .card-header-logo {
-                            -webkit-box-align: center;
-                            -webkit-align-items: center;
-                            -ms-flex-align: center;
-                            align-items: center;
-                            display: -webkit-box;
-                            display: -webkit-flex;
-                            display: -ms-flexbox;
-                            display: flex;
-                            text-align: center;
-                            align-content: center;
-                        }
-
-                    .card-erede {
-                        padding-bottom: 0px;
-                        float: right;
-                        background-color: #ec7000;
-                        border-radius: 4px;
-                        padding: 2px;
-                    }
-
-                    .card-icon {
-                        background-color: #fff;
-                        border: 1px solid #bbb;
-                        border-radius: 3px;
-                        -webkit-box-sizing: content-box;
-                        box-sizing: content-box
-                    }
-
-                    .card-header-icon {
-                        display: inline-block
-                    }
-
-                    .card-form {
-                        padding: 10px 15px 10px 10px;
-                        text-align: start;
-                    }
-
-                    .card-form-group {
+                    .cardrede-form-group {
                         margin-bottom: 10px;
-                        padding: 0px 5px;
+                        padding: 0px;
                     }
 
-                    .card-form-group-flex {
-                        display: -webkit-box;
-                        display: -webkit-flex;
-                        display: -ms-flexbox;
-                        display: flex;
-                        -webkit-flex-wrap: wrap;
-                        -ms-flex-wrap: wrap;
-                        flex-wrap: wrap;
-                        -webkit-box-pack: justify;
-                        -webkit-justify-content: space-between;
-                        -ms-flex-pack: justify;
-                        justify-content: space-between;
+                    .cardrede-form-group-left {
+                        padding-right: 2px;
                     }
 
-                    .card-form-subgroup {
-                        -webkit-flex-basis: 190px;
-                        -ms-flex-preferred-size: 190px;
-                        flex-basis: 190px;
-                        -webkit-box-flex: 1;
-                        -webkit-flex-grow: 1;
-                        -ms-flex-positive: 1;
-                        flex-grow: 1;
+                    .cardrede-form-group-right {
+                        padding-left: 2px;
                     }
 
-                        .card-form-group > label, .card-form-subgroup > label, .card-form-label-error {
-                            color: #000;
+                        .cardrede-form-group > label, .cardrede-form-group-left > label, .cardrede-form-group-right > label, .cardrede-form-label-error {
                             display: block;
                             font-size: 16px;
                             font-weight: 400;
@@ -157,20 +74,19 @@
                             text-align: left;
                         }
 
-                    .card-form-label-error {
+                    .cardrede-form-label-error {
                         color: #ca2a2a;
                         display: none;
                         font-size: 14px;
                         margin: 3px 0;
                     }
 
-                    .card-form-input {
+                    .cardrede-form-input {
                         margin: 4px 0 0;
                         padding: 0;
                     }
 
-                        .card-form-input > input {
-                            margin: 0 !important;
+                        .cardrede-form-input > input {
                             width: 100%;
                             height: 100%;
                             max-width: unset;
@@ -181,72 +97,62 @@
                             font-size: 18px;
                             text-align: center;
                             letter-spacing: 2px;
+                            font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace !important;
                         }
                 </style>
-                <div class="card-container">
-                    <div class="card-wrapper"></div>
-                    <form id="ccform" action="">
-                        <div class="card-header">
-                            <div class="card-header-label">
-                                <div class="card-header-logo">
-                                    <div class="card-header-label">
-                                        <svg width="48" height="29" class="card-icon">
-                                            <symbol viewBox="0 0 48 29">
-                                                <path d="M46.177 29H1.823C.9 29 0 28.13 0 27.187V1.813C0 .87.9 0 1.823 0h44.354C47.1 0 48 .87 48 1.813v25.375C48 28.13 47.1 29 46.177 29z" style="fill: #FFF"></path>
-                                                <path d="M4.8 9.14c0-.427.57-.973 1.067-.973h7.466c.496 0 1.067.546 1.067.972v3.888c0 .425-.57.972-1.067.972H5.867c-.496 0-1.067-.547-1.067-.972v-3.89z" style="fill: #828282"></path>
-                                                <rect style="fill: #828282" x="10.8" y="22.167" width="3.6" height="2.333" rx="1.167"></rect>
-                                                <rect style="fill: #828282" x="4.8" y="22.167" width="3.6" height="2.333" rx="1.167"></rect>
-                                                <path d="M6.55 16.333h34.9c.966 0 1.75.784 1.75 1.75 0 .967-.784 1.75-1.75 1.75H6.55c-.966 0-1.75-.783-1.75-1.75 0-.966.784-1.75 1.75-1.75z" style="fill: #828282"></path>
-                                                <ellipse style="fill: #828282" cx="40.2" cy="6.417" rx="3" ry="2.917"></ellipse>
-                                            </symbol>
-                                        </svg>
-                                    </div>
-                                    <div class="card-header-text">Cartão de crédito ou débito</div>
-                                </div>
-                                <div class="card-erede">
-                                    <div class="card-header-icon">
-                                        <img src="https://www.userede.com.br/content/dam/userede/website/img/use-rede-logo-rede-itau-1221-95x29.png" />
-                                    </div>
-                                </div>
+                <div class="cardrede-container">
+                    <div class="cardrede-wrapper"></div>
+                    <form asp-area="PaymentERede" asp-controller="ERede" asp-action="Checkout" method="POST" id="ccform" class="form-horizontal">
+                        <div class="cardrede-header d-flex justify-content-around">
+                            <div class="form-check form-check-inline m-0">
+                                <img src="~/_content/SimplCommerce.Module.PaymentERede/imgs/logo-erede.png">
+                            </div>
+                            <div class="form-check form-check-inline m-0">
+                                <input class="form-check-input" type="radio" name="radioKind" id="radioCredito" value="C">
+                                <label class="form-check-label" for="radioCredito">Crédito</label>
+                            </div>
+                            <div class="form-check form-check-inline m-0">
+                                <input class="form-check-input" type="radio" name="radioKind" id="radioDebito" value="D">
+                                <label class="form-check-label" for="radioDebito">Débito</label>
                             </div>
                         </div>
-                        <div style="padding: 10px 15px 10px 10px">
-                            <div class="card-form-group">
-                                <label class="card-form-label">
+                        <div style="padding: 12px">
+                            <div class="cardrede-form-group">
+                                <label>
                                     Número do cartão
                                 </label>
-                                <div class="card-form-input">
-                                    <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Número do cartão" name="number" id="number">
+                                <div class="cardrede-form-input">
+                                    <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Número do cartão" name="cardNumber" id="cardNumber">
                                 </div>
-                                <div class="card-form-label-error"></div>
+                                <div class="cardrede-form-label-error"></div>
                             </div>
-                            <div class="card-form-group">
-                                <label class="card-form-label">
+                            <div class="cardrede-form-group">
+                                <label>
                                     Nome como no cartão
                                 </label>
-                                <div class="card-form-input">
-                                    <input type="text" placeholder="Nome como no cartão" name="name" id="name">
+                                <div class="cardrede-form-input">
+                                    <input type="text" placeholder="Nome como no cartão" name="cardName" id="cardName">
                                 </div>
-                                <div class="card-form-label-error"></div>
+                                <div class="cardrede-form-label-error"></div>
                             </div>
-                            <div class="card-form-group card-form-group-flex">
-                                <div class="card-form-subgroup" style="padding-right: 2px;">
-                                    <label class="card-form-label">
+                            <div class="cardrede-form-group d-flex">
+                                <div class="cardrede-form-group-left">
+                                    <label>
                                         Validade
                                     </label>
-                                    <div class="card-form-input">
-                                        <input type="text" class="cc-exp" pattern="\d*" x-autocompletetype="cc-exp" placeholder="Validade (MM/AA)" required maxlength="9" name="expiry" id="expiry">
+                                    <div class="cardrede-form-input">
+                                        <input type="text" class="cc-exp" pattern="\d*" x-autocompletetype="cc-exp" placeholder="Validade (MM/AA)" required maxlength="9" name="cardExpiry" id="cardExpiry">
                                     </div>
-                                    <div class="card-form-label-error"></div>
+                                    <div class="cardrede-form-label-error"></div>
                                 </div>
-                                <div class="card-form-subgroup" style="padding-left: 2px;">
-                                    <label class="card-form-label">
+                                <div class="cardrede-form-group-right">
+                                    <label>
                                         CVV
                                     </label>
-                                    <div class="card-form-input">
-                                        <input type="text" class="cc-cvc" pattern="\d*" x-autocompletetype="cc-csc" placeholder="CVV" required autocomplete="off" name="cvc" id="cvc">
+                                    <div class="cardrede-form-input">
+                                        <input type="text" class="cc-cvc" pattern="\d*" x-autocompletetype="cc-csc" placeholder="CVV" required autocomplete="off" name="cardCvc" id="cardCvc">
                                     </div>
-                                    <div class="card-form-label-error"></div>
+                                    <div class="cardrede-form-label-error"></div>
                                 </div>
                             </div>
                         </div>
@@ -264,16 +170,21 @@
 <script src="~/lib/card/dist/card.js"></script>
 <script src="~/lib/card/dist/jquery.card.js"></script>
 <script>
-    document.currentScript.src =''; // So that the script executes, but later has a src.
-    //alert('[' + JSON.stringify($('#number')) + ']');
+    $('#submit-button').click(function(event) {
+        if(!event.detail || event.detail == 1){
+            //activate on first click only to avoid hiding again on multiple clicks
+            $('#ccform').submit();
+        }
+    });
+
     $('#ccform').card({
-        container: '.card-wrapper', // *required*
+        container: '.cardrede-wrapper', // *required*
 
         formSelectors: {
-            numberInput: '#number', // optional — default input[name="number"]
-            expiryInput: '#expiry', // optional — default input[name="expiry"]
-            cvcInput: '#cvc', // optional — default input[name="cvc"]
-            nameInput: '#name' // optional - defaults input[name="name"]
+            numberInput: '#cardNumber', // optional — default input[name="number"]
+            expiryInput: '#cardExpiry', // optional — default input[name="expiry"]
+            cvcInput: '#cardCvc', // optional — default input[name="cvc"]
+            nameInput: '#cardName' // optional - defaults input[name="name"]
         },
 
         width: 350, // optional — default 350px
@@ -282,13 +193,13 @@
         // Strings for translation - optional
         messages: {
             validDate: 'válido\naté', // optional - default 'valid\nthru'
-            monthYear: 'mm/yyyy', // optional - default 'month/year'
+            monthYear: 'mm/aaaa', // optional - default 'month/year'
         },
 
         // Default placeholders for rendered fields - optional
         placeholders: {
             number: '•••• •••• •••• ••••',
-            name: 'Full Name',
+            name: 'Nome Cartão',
             expiry: '••/••',
             cvc: '•••'
         },
@@ -298,6 +209,6 @@
         },
 
         // if true, will log helpful messages for setting up Card
-        debug: true // optional - default false
+        debug: false // optional - default false
     });
 </script>

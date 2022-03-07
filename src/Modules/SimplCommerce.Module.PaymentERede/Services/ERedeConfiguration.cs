@@ -10,10 +10,12 @@ namespace SimplCommerce.Module.PaymentERede.Services
 {
     public class ERedeConfiguration : IERedeConfiguration
     {
-        public string Environment { get; private set; }
-        public string MerchantId { get; private set; }
-        public string PublicKey { get; private set; }
-        public string PrivateKey { get; private set; }
+        public bool Sandbox { get; private set; }
+        public string RedePV { get; private set; }
+        public int QtdeParcelas { get; private set; }
+        public string RedeToken { get; private set; }
+        public double ValorMinimoParcelamento { get; set; }
+        public string SoftDescriptor { get; set; }
 
         //public async Task<IBraintreeGateway> BraintreeGateway()
         public async Task<object> ERedeGateway()
@@ -43,13 +45,15 @@ namespace SimplCommerce.Module.PaymentERede.Services
             var eredeProvider = await _paymentProviderRepository.Query().FirstOrDefaultAsync(x => x.Id == PaymentProviderHelper.ERedeProviderId);
             var eredeSetting = JsonConvert.DeserializeObject<ERedeConfigForm>(eredeProvider.AdditionalSettings);
 
-            Environment = eredeSetting.Environment;
-            MerchantId = eredeSetting.MerchantId;
-            PublicKey = eredeSetting.PublicKey;
-            PrivateKey = eredeSetting.PrivateKey;
+            Sandbox = eredeSetting.Sandbox;
+            RedePV = eredeSetting.RedePV;
+            QtdeParcelas = eredeSetting.QtdeParcelas;
+            ValorMinimoParcelamento = eredeSetting.ValorMinimoParcelamento;
+            RedeToken = eredeSetting.RedeToken;
+            SoftDescriptor = eredeSetting.SoftDescriptor;
 
             //return new BraintreeGateway(Environment, MerchantId, PublicKey, PrivateKey);
-            return new { Environment, MerchantId, PublicKey, PrivateKey };
+            return new { Sandbox, RedePV, QtdeParcelas, ValorMinimoParcelamento, RedeToken, SoftDescriptor };
         }
 
         public async Task<string> GetClientToken()

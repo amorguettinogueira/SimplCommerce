@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
+using eRede;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Infrastructure.Helpers;
 using SimplCommerce.Module.Core.Extensions;
 using SimplCommerce.Module.Core.Services;
 using SimplCommerce.Module.Orders.Models;
 using SimplCommerce.Module.Orders.Services;
+using SimplCommerce.Module.PaymentERede.Areas.PaymentERede.ViewModels;
 using SimplCommerce.Module.PaymentERede.Models;
 using SimplCommerce.Module.PaymentERede.Services;
 using SimplCommerce.Module.Payments.Models;
@@ -16,6 +21,7 @@ using SimplCommerce.Module.ShoppingCart.Services;
 
 namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
 {
+    [Authorize]
     [Area("PaymentERede")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class ERedeController : Controller
@@ -46,6 +52,88 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             _currencyService = currencyService;
         }
 
+        [AutoValidateAntiforgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Checkout([FromForm] string radioKind,
+                                                  [FromForm] string cardNumber,
+                                                  [FromForm] string cardName,
+                                                  [FromForm] string cardExpiry,
+                                                  [FromForm] string cardCvc)
+        {
+            var currentUser = await _workContext.GetCurrentUser();
+            var cart = await _cartService.GetActiveCartDetails(currentUser.Id);
+
+            if (cart == null)
+            {
+                return NotFound();
+            }
+
+            var MonthYear = cardExpiry.MonthYearSplit("/");
+
+            if (!Validate(radioKind, ref cardNumber, ref cardName, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], ref cardCvc))
+            {
+                TempData["Error"] = "Payment Method is not eligible for this order.";
+                return Redirect("~/checkout/payment");
+            }
+
+            var orderCreateResult = await _orderService.CreateOrder(cart.Id, PaymentProviderHelper.ERedeProviderId, 0);
+
+            if (!orderCreateResult.Success)
+            {
+                TempData["Error"] = orderCreateResult.Error;
+                return Redirect("~/checkout/payment");
+            }
+
+            var redeProvider = await _paymentProviderRepository.Query().FirstOrDefaultAsync(x => x.Id == PaymentProviderHelper.ERedeProviderId);
+            var redeSetting = JsonConvert.DeserializeObject<ERedeConfigForm>(redeProvider.AdditionalSettings);
+
+            var store = new Store(redeSetting.RedePV, redeSetting.RedeToken, redeSetting.Sandbox ? eRede.Environment.Sandbox() : eRede.Environment.Production());
+
+            // Transação que será autorizada
+            var transaction = new Transaction { amount = decimal.ToInt32(orderCreateResult.Value.OrderTotal * 100), reference = $"PED#{orderCreateResult.Value.Id}" };
+            if (radioKind[0] == ERedeExtensions.CREDIT)
+                transaction.CreditCard(cardNumber, cardCvc, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], cardName);
+            else
+                transaction.DebitCard(cardNumber, cardCvc, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], cardName);
+
+            transaction.threeDSecure = new ThreeDSecure
+            {
+                embedded = true,
+                onFailure = ThreeDSecure.CONTINUE_ON_FAILURE
+            };
+
+            transaction.AddUrl("http://example.org/success", eRede.Url.THREE_D_SECURE_SUCCESS);
+            transaction.AddUrl("http://example.org/failure", eRede.Url.THREE_D_SECURE_FAILURE);
+
+            // Autoriza a transação
+            var response = new eRede.eRede(store).create(transaction);
+
+            if (response.returnCode == "220")
+            {
+                Console.Write(response.threeDSecure.url);
+            }
+            else
+            if (response.returnCode == "00")
+            {
+                Console.WriteLine("Transação autorizada com sucesso: " + response.tid);
+            }
+
+            return Redirect($"~/checkout/success?orderId={orderCreateResult.Value.Id}");
+        }
+
+        public bool Validate(string radioKind,
+                             ref string cardNumber,
+                             ref string cardName,
+                             string cardMonth,
+                             string cardYear,
+                             ref string cardCvc)
+        {
+            cardNumber = cardNumber.OnlyDigits();
+            cardName = string.IsNullOrEmpty(cardName) ? string.Empty : cardName.ToUpper().Trim();
+            cardCvc = cardCvc.OnlyDigits();
+            return true;
+        }
+
         [HttpPost]
         public async Task<IActionResult> Charge(string nonce)
         {
@@ -69,7 +157,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             var zeroDecimalOrderAmount = order.OrderTotal;
             if (!CurrencyHelper.IsZeroDecimalCurrencies(_currencyService.CurrencyCulture))
             {
-                zeroDecimalOrderAmount = zeroDecimalOrderAmount * 100;
+                zeroDecimalOrderAmount *= 100;
             }
 
             var regionInfo = new RegionInfo(_currencyService.CurrencyCulture.LCID);

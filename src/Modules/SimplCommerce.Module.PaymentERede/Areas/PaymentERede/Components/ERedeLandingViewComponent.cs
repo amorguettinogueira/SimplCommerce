@@ -46,7 +46,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Components
             var zeroDecimalAmount = cart.OrderTotal;
             if (!CurrencyHelper.IsZeroDecimalCurrencies(_currencyService.CurrencyCulture))
             {
-                zeroDecimalAmount = zeroDecimalAmount * 100;
+                zeroDecimalAmount *= 100;
             }
 
             var regionInfo = new RegionInfo(_currencyService.CurrencyCulture.LCID);
