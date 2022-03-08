@@ -76,16 +76,4 @@
     <ItemGroup>
         <Folder Include="Migrations\" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Content Update="wwwroot\libwkhtmltox.dll">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Update="wwwroot\libwkhtmltox.dylib">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Update="wwwroot\libwkhtmltox.so">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
 </Project>
