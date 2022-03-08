@@ -102,7 +102,8 @@ void Configure()
         a => a.UseStatusCodePagesWithReExecute("/Home/ErrorWithCode/{0}")
     );
 
-    app.UseHttpsRedirection();
+    if (!app.Environment.IsDevelopment())
+        app.UseHttpsRedirection();
     app.UseCustomizedStaticFiles(builder.Environment);
     app.UseRouting();
     app.UseSwagger();
