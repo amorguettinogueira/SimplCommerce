@@ -44,5 +44,17 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpPost("sc")]
+        public async Task<IActionResult> Success()
+        {
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost("fl")]
+        public async Task<IActionResult> Failure()
+        {
+            return BadRequest(ModelState);
+        }
     }
 }

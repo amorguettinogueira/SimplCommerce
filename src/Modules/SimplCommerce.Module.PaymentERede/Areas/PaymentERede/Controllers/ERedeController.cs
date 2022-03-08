@@ -90,7 +90,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             var store = new Store(redeSetting.RedePV, redeSetting.RedeToken, redeSetting.Sandbox ? eRede.Environment.Sandbox() : eRede.Environment.Production());
 
             // Transação que será autorizada
-            var transaction = new Transaction { amount = decimal.ToInt32(orderCreateResult.Value.OrderTotal * 100), reference = $"PED#{orderCreateResult.Value.Id}" };
+            var transaction = new Transaction { amount = decimal.ToInt32(orderCreateResult.Value.OrderTotal * 100), reference = $"PED {orderCreateResult.Value.Id}" };
             if (radioKind[0] == ERedeExtensions.CREDIT)
                 transaction.CreditCard(cardNumber, cardCvc, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], cardName);
             else
@@ -102,8 +102,8 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                 onFailure = ThreeDSecure.CONTINUE_ON_FAILURE
             };
 
-            transaction.AddUrl("http://example.org/success", eRede.Url.THREE_D_SECURE_SUCCESS);
-            transaction.AddUrl("http://example.org/failure", eRede.Url.THREE_D_SECURE_FAILURE);
+            transaction.AddUrl(Request.GetEndpoint("api/erede/sc/"), eRede.Url.THREE_D_SECURE_SUCCESS);
+            transaction.AddUrl(Request.GetEndpoint("api/erede/fl/"), eRede.Url.THREE_D_SECURE_FAILURE);
 
             // Autoriza a transação
             var response = new eRede.eRede(store).create(transaction);

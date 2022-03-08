@@ -1,10 +1,11 @@
-﻿using SimplCommerce.Module.PaymentERede.Models;
+﻿using Microsoft.AspNetCore.Http;
+using SimplCommerce.Module.PaymentERede.Models;
 using Xunit;
 
 namespace SimplCommerce.Module.PaymentERede.Tests
 {
 
-    public class StringExtensionTests
+    public class eRedeExtensionTests
     {
         private readonly string[] inputOnlyDigits = new string[9] { "AA123AA000", "AA123AA000BB", "00AA2121BB11", "00AA2121BB11CC", "A1B2C3D4E5F6", "1111", null, string.Empty, "ABC" };
         private readonly string[] outputOnlyDigits = new string[9] { "123000", "123000", "00212111", "00212111", "123456", "1111", string.Empty, string.Empty, string.Empty };
@@ -30,6 +31,21 @@ namespace SimplCommerce.Module.PaymentERede.Tests
                 Assert.Equal(((string[])outputMonthYearSplit[i])[0], my[0]);
                 Assert.Equal(((string[])outputMonthYearSplit[i])[1], my[1]);
             }
+        }
+
+        private readonly string xptoEndpoint = @"http://xpto/endpoint";
+
+        [Fact]
+        public void GetEndpoint()
+        {
+            HttpRequest request = null;
+            Assert.Equal(request.GetEndpoint("endpoint"), string.Empty);
+            var httpContext = new DefaultHttpContext(); // or mock a `HttpContext`
+            httpContext.Request.Host = new HostString("xpto");
+            httpContext.Request.Scheme = "http";
+            Assert.Equal(xptoEndpoint, httpContext.Request.GetEndpoint("endpoint"));
+            Assert.Equal(xptoEndpoint, httpContext.Request.GetEndpoint("/endpoint"));
+            Assert.Equal(xptoEndpoint.Replace("endpoint", string.Empty), httpContext.Request.GetEndpoint(string.Empty));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 
 namespace SimplCommerce.Module.PaymentERede.Models
 {
@@ -55,5 +56,8 @@ namespace SimplCommerce.Module.PaymentERede.Models
             }
             return new string[2] { Month.OnlyDigits(), Year.OnlyDigits() };
         }
+
+        public static string GetEndpoint(this HttpRequest request, string endpoint) =>
+            request != null && request.Host.HasValue && endpoint != null ? string.Format("{0}://{1}/{2}", request.Scheme, request.Host.Value, endpoint.TrimStart('/')) : string.Empty;
     }
 }

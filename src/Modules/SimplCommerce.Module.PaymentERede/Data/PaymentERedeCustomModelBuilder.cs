@@ -19,10 +19,12 @@ namespace SimplCommerce.Module.PaymentERede.Data
                     IsEnabled = true,
                     AdditionalSettings =
                     "{" +
-                        "\"PublicKey\": \"6j4d7qspt5n48kx4\", " +
-                        "\"PrivateKey\" : \"bd1c26e53a6d811243fcc3eb268113e1\", " +
-                        "\"MerchantId\" : \"ncsh7wwqvzs3cx9q\", " +
-                        "\"IsProduction\" : \"false\"" +
+                        "\"Sandbox\": \"true\", " +
+                        "\"RedePV\" : \"\", " +
+                        "\"RedeToken\" : \"\", " +
+                        "\"SoftDescriptor\" : \"\", " +
+                        "\"QtdeParcelas\" : 0, " +
+                        "\"ValorMinimoParcelamento\" : 0," +
                     "}"
                 }
             );
