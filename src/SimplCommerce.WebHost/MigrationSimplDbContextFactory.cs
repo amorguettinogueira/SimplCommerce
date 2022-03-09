@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Design;
+using SimplCommerce.Infrastructure;
 using SimplCommerce.Module.Core.Data;
 using SimplCommerce.WebHost.Extensions;
-using SimplCommerce.Infrastructure;
 
 namespace SimplCommerce.WebHost
 {

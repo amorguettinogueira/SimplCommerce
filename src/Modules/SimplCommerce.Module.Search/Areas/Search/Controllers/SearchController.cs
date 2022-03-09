@@ -65,7 +65,11 @@ namespace SimplCommerce.Module.Search.Areas.Search.Controllers
                 FilterOption = new FilterOption()
             };
 
-            var query = _productRepository.Query().Where(x => x.Name.Contains(searchOption.Query) && x.IsPublished && x.IsVisibleIndividually);
+            var query = _productRepository.Query()
+                .Where(x => EF.Functions.ILike(x.Name, $"%{searchOption.Query}%") && x.IsPublished && x.IsVisibleIndividually);
+            //   Where(x => x.Name.ToLower().Contains(searchOption.Query.ToLower()))
+            //   Where(x => EF.Functions.ILike(x.Name, $"%{keyword}%"))
+            //   Where(x => x.Name.Contains(searchOption.Query) && x.IsPublished && x.IsVisibleIndividually)
 
             if (!query.Any())
             {
@@ -176,7 +180,7 @@ namespace SimplCommerce.Module.Search.Areas.Search.Controllers
                     Count = g.Count()
                 }).ToList();
 
-            foreach(var item in model.FilterOption.Categories)
+            foreach (var item in model.FilterOption.Categories)
             {
                 item.Name = getCategoryName(item.Id, nameof(item.Name), item.Name);
             }

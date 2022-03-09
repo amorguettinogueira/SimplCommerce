@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,8 +33,10 @@ app.Run();
 void ConfigureService()
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    builder.Configuration.AddEntityFrameworkConfig(options =>
-        options.UseNpgsql(connectionString));
+    builder.Configuration.AddEntityFrameworkConfig(options => options
+        .UseNpgsql(connectionString)
+        .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+        );
 
     GlobalConfiguration.WebRootPath = builder.Environment.WebRootPath;
     GlobalConfiguration.ContentRootPath = builder.Environment.ContentRootPath;
