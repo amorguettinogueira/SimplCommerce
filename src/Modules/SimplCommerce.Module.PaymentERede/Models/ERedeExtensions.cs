@@ -59,5 +59,8 @@ namespace SimplCommerce.Module.PaymentERede.Models
 
         public static string GetEndpoint(this HttpRequest request, string endpoint) =>
             request != null && request.Host.HasValue && endpoint != null ? string.Format("{0}://{1}/{2}", request.Scheme, request.Host.Value, endpoint.TrimStart('/')) : string.Empty;
+
+        public static bool Int32InRange(this string value, int min, int max) =>
+            string.IsNullOrEmpty(value) ? false : int.TryParse(value, out var result) && (result >= min && result <= max);
     }
 }

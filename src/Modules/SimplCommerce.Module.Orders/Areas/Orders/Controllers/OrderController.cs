@@ -39,21 +39,21 @@ namespace SimplCommerce.Module.Orders.Areas.Orders.Controllers
                 .Include(x => x.OrderItems).ThenInclude(x => x.Product).ThenInclude(x => x.OptionCombinations).ThenInclude(x => x.Option)
                 .OrderByDescending(x => x.CreatedOn).ToListAsync();
 
-             var model2 = model.Select(x => new OrderHistoryListItem(_currencyService)
+            var model2 = model.Select(x => new OrderHistoryListItem(_currencyService)
+            {
+                Id = x.Id,
+                CreatedOn = x.CreatedOn,
+                SubTotal = x.SubTotal,
+                OrderStatus = x.OrderStatus,
+                OrderItems = x.OrderItems.Select(i => new OrderHistoryProductVm
                 {
-                    Id = x.Id,
-                    CreatedOn = x.CreatedOn,
-                    SubTotal = x.SubTotal,
-                    OrderStatus = x.OrderStatus,
-                    OrderItems = x.OrderItems.Select(i => new OrderHistoryProductVm
-                    {
-                        ProductId = i.ProductId,
-                        ProductName = i.Product.Name,
-                        Quantity = i.Quantity,
-                        ThumbnailImage = i.Product.ThumbnailImage.FileName,
-                        ProductOptions = i.Product.OptionCombinations.Select(o => o.Value)
-                    }).ToList()
-                }).ToList();
+                    ProductId = i.ProductId,
+                    ProductName = i.Product.Name,
+                    Quantity = i.Quantity,
+                    ThumbnailImage = i.Product.ThumbnailImage == null ? "no-image.png" : i.Product.ThumbnailImage.FileName,
+                    ProductOptions = i.Product.OptionCombinations.Select(o => o.Value)
+                }).ToList()
+            }).ToList();
 
             foreach (var item in model2)
             {

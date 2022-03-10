@@ -60,20 +60,19 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                                                   [FromForm] string cardExpiry,
                                                   [FromForm] string cardCvc)
         {
+            var MonthYear = cardExpiry.MonthYearSplit("/");
+
+            if (!Validate(radioKind, ref cardNumber, ref cardName, MonthYear[ERedeExtensions.MONTH], ref MonthYear[ERedeExtensions.YEAR], ref cardCvc))
+            {
+                return Redirect("~/checkout/payment");
+            }
+
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCartDetails(currentUser.Id);
 
             if (cart == null)
             {
                 return NotFound();
-            }
-
-            var MonthYear = cardExpiry.MonthYearSplit("/");
-
-            if (!Validate(radioKind, ref cardNumber, ref cardName, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], ref cardCvc))
-            {
-                TempData["Error"] = "Payment Method is not eligible for this order.";
-                return Redirect("~/checkout/payment");
             }
 
             var orderCreateResult = await _orderService.CreateOrder(cart.Id, PaymentProviderHelper.ERedeProviderId, 0);
@@ -92,7 +91,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             // Transação que será autorizada
             var transaction = new Transaction { amount = decimal.ToInt32(orderCreateResult.Value.OrderTotal * 100), reference = $"PED {orderCreateResult.Value.Id}" };
             if (radioKind[0] == ERedeExtensions.CREDIT)
-                transaction.CreditCard(cardNumber, cardCvc, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], cardName);
+                transaction.CreditCard(cardNumber, cardCvc, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], cardName).Capture(true);
             else
                 transaction.DebitCard(cardNumber, cardCvc, MonthYear[ERedeExtensions.MONTH], MonthYear[ERedeExtensions.YEAR], cardName);
 
@@ -106,7 +105,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             transaction.AddUrl(Request.GetEndpoint("api/erede/fl/"), eRede.Url.THREE_D_SECURE_FAILURE);
 
             // Autoriza a transação
-            var response = new eRede.eRede(store).create(transaction);
+            var response = new eRede.eRede(store).create(transaction, Request.Headers.UserAgent);
 
             if (response.returnCode == "220")
             {
@@ -125,12 +124,66 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                              ref string cardNumber,
                              ref string cardName,
                              string cardMonth,
-                             string cardYear,
+                             ref string cardYear,
                              ref string cardCvc)
         {
             cardNumber = cardNumber.OnlyDigits();
             cardName = string.IsNullOrEmpty(cardName) ? string.Empty : cardName.ToUpper().Trim();
             cardCvc = cardCvc.OnlyDigits();
+
+            if (string.IsNullOrEmpty(radioKind) || radioKind.Length == 0 || (radioKind[0] != ERedeExtensions.CREDIT && radioKind[0] != ERedeExtensions.DEBIT))
+            {
+                TempData["Error"] = "Indique se o cartão será usado na modalidade Crédito ou Débito";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cardNumber) || cardNumber.Length < 13)
+            {
+                TempData["Error"] = "O número do cartão parece estar incompleto";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cardName) || cardName.Length < 10)
+            {
+                TempData["Error"] = "O nome no cartão parece estar incompleto";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cardMonth) || !cardMonth.Int32InRange(1, 12))
+            {
+                TempData["Error"] = "O mês de validade deve estar entre 1 e 12";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cardYear))
+            {
+                TempData["Error"] = "O ano de validade é obrigatório";
+                return false;
+            }
+
+            if (int.TryParse(cardYear, out int year) && year < DateTime.Today.Year)
+            {
+                int auxYear = year + 2000;
+                if (auxYear >= DateTime.Today.Year && auxYear <= DateTime.Today.Year + 10)
+                    year = auxYear;
+            }
+
+            if (year < DateTime.Today.Year || year > DateTime.Today.Year + 10)
+            {
+                TempData["Error"] = $"O ano de validade deve estar entre {DateTime.Today.Year} e {DateTime.Today.Year + 10}";
+                return false;
+            }
+            else
+            {
+                cardYear = year.ToString();
+            }
+
+            if (string.IsNullOrEmpty(cardCvc) || cardCvc.Length < 3 || cardCvc.Length > 4)
+            {
+                TempData["Error"] = "O CVC do deve ter 3 ou 4 dígitos";
+                return false;
+            }
+
             return true;
         }
 
