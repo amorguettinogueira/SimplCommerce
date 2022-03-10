@@ -109,7 +109,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
 
             if (response.returnCode == "220")
             {
-                Console.Write(response.threeDSecure.url);
+                return Redirect(response.threeDSecure.url);
             }
             else
             if (response.returnCode == "00")
