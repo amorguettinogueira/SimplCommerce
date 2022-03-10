@@ -104,8 +104,13 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             transaction.AddUrl(Request.GetEndpoint("api/erede/sc/"), eRede.Url.THREE_D_SECURE_SUCCESS);
             transaction.AddUrl(Request.GetEndpoint("api/erede/fl/"), eRede.Url.THREE_D_SECURE_FAILURE);
 
+            Console.WriteLine(Request.Headers.UserAgent);
+
             // Autoriza a transação
             var response = new eRede.eRede(store).create(transaction, Request.Headers.UserAgent);
+
+            Console.WriteLine(response.returnCode);
+            Console.WriteLine(response.threeDSecure.url);
 
             if (response.returnCode == "220")
             {
