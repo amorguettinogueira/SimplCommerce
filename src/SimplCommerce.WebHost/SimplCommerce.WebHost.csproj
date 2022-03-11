@@ -35,7 +35,6 @@
         <ProjectReference Include="..\Modules\SimplCommerce.Module.ProductComparison\SimplCommerce.Module.ProductComparison.csproj" />
         <ProjectReference Include="..\Modules\SimplCommerce.Module.ProductRecentlyViewed\SimplCommerce.Module.ProductRecentlyViewed.csproj" />
         <ProjectReference Include="..\Modules\SimplCommerce.Module.Reviews\SimplCommerce.Module.Reviews.csproj" />
-        <ProjectReference Include="..\Modules\SimplCommerce.Module.SampleData\SimplCommerce.Module.SampleData.csproj" />
         <ProjectReference Include="..\Modules\SimplCommerce.Module.Search\SimplCommerce.Module.Search.csproj" />
         <ProjectReference Include="..\Modules\SimplCommerce.Module.Shipments\SimplCommerce.Module.Shipments.csproj" />
         <ProjectReference Include="..\Modules\SimplCommerce.Module.ShippingFree\SimplCommerce.Module.ShippingFree.csproj" />
