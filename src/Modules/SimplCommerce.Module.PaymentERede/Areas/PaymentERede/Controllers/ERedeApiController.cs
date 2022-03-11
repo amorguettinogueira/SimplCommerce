@@ -49,6 +49,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("sc")]
         public async Task<IActionResult> Success()
         {
+            Console.WriteLine("Success");
             foreach (var item in Request.Query)
             {
                 Console.WriteLine(
@@ -61,6 +62,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("fl")]
         public async Task<IActionResult> Failure()
         {
+            Console.WriteLine("Failure");
             foreach (var item in Request.Query)
             {
                 Console.WriteLine(
