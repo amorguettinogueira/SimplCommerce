@@ -49,18 +49,24 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("sc")]
         public async Task<IActionResult> Success()
         {
-            Console.WriteLine(
-                JsonConvert.SerializeObject(Request)
-                );
+            foreach (var item in Request.Query)
+            {
+                Console.WriteLine(
+                    $"{item.Key} = {item.Value}"
+                    );
+            }
             return BadRequest(ModelState);
         }
 
         [HttpPost("fl")]
         public async Task<IActionResult> Failure()
         {
-            Console.WriteLine(
-                JsonConvert.SerializeObject(Request)
-                );
+            foreach (var item in Request.Query)
+            {
+                Console.WriteLine(
+                    $"{item.Key} = {item.Value}"
+                    );
+            }
             return BadRequest(ModelState);
         }
     }
