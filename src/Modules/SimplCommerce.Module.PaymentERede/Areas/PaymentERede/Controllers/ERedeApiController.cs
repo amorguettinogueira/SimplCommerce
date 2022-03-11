@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -49,26 +50,54 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("sc")]
         public async Task<IActionResult> Success()
         {
-            Console.WriteLine("Success");
+            Console.WriteLine("Success in");
+            Log(Request);
+            Console.WriteLine("Success out");
+            return BadRequest(ModelState);
+        }
+
+        private void Log(HttpRequest Request)
+        {
             foreach (var item in Request.Query)
             {
                 Console.WriteLine(
-                    $"{item.Key} = {item.Value}"
+                    $"Query {item.Key} = {item.Value}"
                     );
             }
-            return BadRequest(ModelState);
+            foreach (var item in Request.Headers)
+            {
+                Console.WriteLine(
+                    $"Headers {item.Key} = {item.Value}"
+                    );
+            }
+            foreach (var item in Request.RouteValues)
+            {
+                Console.WriteLine(
+                    $"RouteValues {item.Key} = {item.Value}"
+                    );
+            }
+            foreach (var item in Request.Form)
+            {
+                Console.WriteLine(
+                    $"Form {item.Key} = {item.Value}"
+                    );
+            }
+            foreach (var item in Request.Form)
+            {
+                Console.WriteLine(
+                    $"Form {item.Key} = {item.Value}"
+                    );
+            }
+            Console.WriteLine($"QueryString {Request.QueryString}");
+            Console.WriteLine($"ToString() {Request}");
         }
 
         [HttpPost("fl")]
         public async Task<IActionResult> Failure()
         {
-            Console.WriteLine("Failure");
-            foreach (var item in Request.Query)
-            {
-                Console.WriteLine(
-                    $"{item.Key} = {item.Value}"
-                    );
-            }
+            Console.WriteLine("Failure in");
+            Log(Request);
+            Console.WriteLine("Failure out");
             return BadRequest(ModelState);
         }
     }
