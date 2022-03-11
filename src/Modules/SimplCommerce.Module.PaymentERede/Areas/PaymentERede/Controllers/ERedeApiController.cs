@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -48,12 +49,18 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("sc")]
         public async Task<IActionResult> Success()
         {
+            Console.WriteLine(
+                JsonConvert.SerializeObject(Request)
+                );
             return BadRequest(ModelState);
         }
 
         [HttpPost("fl")]
         public async Task<IActionResult> Failure()
         {
+            Console.WriteLine(
+                JsonConvert.SerializeObject(Request)
+                );
             return BadRequest(ModelState);
         }
     }
