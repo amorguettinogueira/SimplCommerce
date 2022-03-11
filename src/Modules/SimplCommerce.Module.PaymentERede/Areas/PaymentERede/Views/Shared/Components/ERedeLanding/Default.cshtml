@@ -1,10 +1,14 @@
 ﻿@model SimplCommerce.Module.PaymentERede.Areas.PaymentERede.ViewModels.ERedeCheckoutForm
 
-<label>eRede</label>
+<label>
+    eRede
+</label>
 
 <div class="form-group">
     <div class="col-md-12">
-        <button type="button" class="btn btn-order" data-toggle="modal" data-target="#eredeModal">@Localizer["Pagamento eRede"]</button>
+        <button type="button" class="btn btn-order" data-toggle="modal" data-target="#eredeModal">
+            @Localizer["Pagamento eRede"]
+        </button>
     </div>
 </div>
 
@@ -16,9 +20,12 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="alert alert-success alert-dismissible" style="display:none;">
-                    <span id="alertBraintree"></span>
+                    <span id="alert-rede">
+                    </span>
                     <button data-dismiss="alert" type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">x</span>
+                        <span aria-hidden="true">
+                            x
+                        </span>
                     </button>
                 </div>
                 <style>
@@ -101,7 +108,8 @@
                         }
                 </style>
                 <div class="cardrede-container">
-                    <div class="cardrede-wrapper"></div>
+                    <div class="cardrede-wrapper d-sm-none d-md-block">
+                    </div>
                     <form asp-area="PaymentERede" asp-controller="ERede" asp-action="Checkout" method="POST" id="ccform" class="form-horizontal">
                         <div class="cardrede-header d-flex justify-content-around">
                             <div class="form-check form-check-inline m-0">
@@ -109,11 +117,15 @@
                             </div>
                             <div class="form-check form-check-inline m-0">
                                 <input class="form-check-input" type="radio" name="radioKind" id="radioCredito" value="C">
-                                <label class="form-check-label" for="radioCredito">Crédito</label>
+                                <label class="form-check-label" for="radioCredito">
+                                    Crédito
+                                </label>
                             </div>
                             <div class="form-check form-check-inline m-0">
                                 <input class="form-check-input" type="radio" name="radioKind" id="radioDebito" value="D">
-                                <label class="form-check-label" for="radioDebito">Débito</label>
+                                <label class="form-check-label" for="radioDebito">
+                                    Débito
+                                </label>
                             </div>
                         </div>
                         <div style="padding: 12px">
@@ -124,7 +136,8 @@
                                 <div class="cardrede-form-input">
                                     <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Número do cartão" name="cardNumber" id="cardNumber">
                                 </div>
-                                <div class="cardrede-form-label-error"></div>
+                                <div class="cardrede-form-label-error">
+                                </div>
                             </div>
                             <div class="cardrede-form-group">
                                 <label>
@@ -133,7 +146,8 @@
                                 <div class="cardrede-form-input">
                                     <input type="text" placeholder="Nome como no cartão" name="cardName" id="cardName">
                                 </div>
-                                <div class="cardrede-form-label-error"></div>
+                                <div class="cardrede-form-label-error">
+                                </div>
                             </div>
                             <div class="cardrede-form-group d-flex">
                                 <div class="cardrede-form-group-left">
@@ -143,7 +157,8 @@
                                     <div class="cardrede-form-input">
                                         <input type="text" class="cc-exp" pattern="\d*" x-autocompletetype="cc-exp" placeholder="Validade (MM/AA)" required maxlength="9" name="cardExpiry" id="cardExpiry">
                                     </div>
-                                    <div class="cardrede-form-label-error"></div>
+                                    <div class="cardrede-form-label-error">
+                                    </div>
                                 </div>
                                 <div class="cardrede-form-group-right">
                                     <label>
@@ -152,23 +167,30 @@
                                     <div class="cardrede-form-input">
                                         <input type="text" class="cc-cvc" pattern="\d*" x-autocompletetype="cc-csc" placeholder="CVV" required autocomplete="off" name="cardCvc" id="cardCvc">
                                     </div>
-                                    <div class="cardrede-form-label-error"></div>
+                                    <div class="cardrede-form-label-error">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <button id="submit-button" class="btn btn-order">@Localizer["Pagar"]</button>
+                <button id="submit-button" class="btn btn-order">
+                    @Localizer["Pagar"]
+                </button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Fechar"]</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    @Localizer["Fechar"]
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="~/lib/card/dist/card.js"></script>
-<script src="~/lib/card/dist/jquery.card.js"></script>
+<script src="~/lib/card/dist/card.js">
+</script>
+<script src="~/lib/card/dist/jquery.card.js">
+</script>
 <script>
     $('#submit-button').click(function(event) {
         if(!event.detail || event.detail == 1){
@@ -186,29 +208,24 @@
             cvcInput: '#cardCvc', // optional — default input[name="cvc"]
             nameInput: '#cardName' // optional - defaults input[name="name"]
         },
-
         width: 350, // optional — default 350px
         formatting: true, // optional - default true
-
         // Strings for translation - optional
-        messages: {
-            validDate: 'válido\naté', // optional - default 'valid\nthru'
-            monthYear: 'mm/aaaa', // optional - default 'month/year'
-        },
-
+         messages: {
+             validDate: 'válido\naté', // optional - default 'valid\nthru'
+             monthYear: 'mm/aaaa', // optional - default 'month/year'
+         },
         // Default placeholders for rendered fields - optional
-        placeholders: {
-            number: '•••• •••• •••• ••••',
-            name: 'Nome Cartão',
-            expiry: '••/••',
-            cvc: '•••'
-        },
-
-        masks: {
-            cardNumber: '•' // optional - mask card number
-        },
-
-        // if true, will log helpful messages for setting up Card
-        debug: false // optional - default false
+      placeholders: {
+          number: '•••• •••• •••• ••••',
+          name: 'Nome Cartão',
+          expiry: '••/••',
+          cvc: '•••'
+      },
+      masks: {
+          cardNumber: '•' // optional - mask card number
+      },
+          // if true, will log helpful messages for setting up Card
+      debug: false // optional - default false
     });
 </script>
