@@ -2,7 +2,7 @@
 
 @inject IViewLocalizer Localizer
 
-<ul class="navbar-nav">
+<ul class="navbar-nav m-0">
     @foreach (var item in Model)
     {
         if (item.ChildItems.Any())
@@ -20,7 +20,9 @@
                             <li>
                                 <a class="dropdown-item dropdown-toggle" href="javascript:void(0);">@childItem.Name</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/@childItem.Slug">@Localizer["All"] @childItem.Name</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="/@childItem.Slug">@Localizer["All"] @childItem.Name</a>
+                                    </li>
                                     @foreach (var childChildItem in childItem.ChildItems)
                                     {
                                         <li><a class="dropdown-item" href="/@childChildItem.Slug">@childChildItem.Name</a></li>

@@ -5,27 +5,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewData["Title"] - SimplCommerce</title>
-    @RenderSection("additionalMeta", false)
-
+    <title>@ViewData["Title"] - SimplCommerce</title>    @RenderSection("additionalMeta", false)
     <link simpl-append-version="true" rel="stylesheet" href="~/libs.min.css" />
     <link simpl-append-version="true" rel="stylesheet" href="~/_content/SimplCommerce.Module.Core/site.css" />
     <script simpl-append-version="true" src="~/lib/angular/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+    </script>
     @RenderSection("head", required: false)
 </head>
 <body>
-    <div class="top-bar">
+    @*<div class="top-bar">
         <div class="container">
-            <ul class="nav justify-content-end">
-                <partial name="_SelectLanguagePartial" />
-                <partial name="_LoginPartial" />
-            </ul>
+        <ul class="nav justify-content-end">
+        <partial name="_SelectLanguagePartial" />
+        <partial name="_LoginPartial" />
+        </ul>
         </div>
-    </div>
+        </div>*@
     <div class="main-header">
         <div class="container">
             <div class="row">
@@ -48,8 +44,11 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarMain">
+            <div class="collapse navbar-collapse" id="navbarMain" style="justify-content: space-between">
                 @await Component.InvokeAsync("CategoryMenu")
+                <ul class="form-inline m-0 pull-right navbar-nav">
+                    <partial name="_LoginPartial" />
+                </ul>
             </div>
         </div>
     </div>
@@ -64,25 +63,52 @@
                     <h4>@Localizer["Customer Service"]</h4>
                     <vc:menu menu-id="1"></vc:menu>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <h4>@Localizer["Information"]</h4>
                     <vc:menu menu-id="2"></vc:menu>
                 </div>
-                <div class="col-md-6">
-                    <h4>SimplCommerce</h4>
-                    <p>The first ecommerce system built on .NET Core.</p>
-                    <p>Simple to use and easy to customize</p>
-                    <p>Cross platform and Open source</p>
+                <div class="col-md-3">
+                    <div class="pull-right">
+                        <h4>Siga-nos</h4>
+                        <ul class="menu social">
+                            <li>
+                                <a href="https://www.instagram.com/flordezaya" target="_blank" title="Instagram">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                    <span>Instagram</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/flordezaya" target="_blank" title="Facebook">
+                                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                    <span>Facebook</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" target="_blank" title="Youtube">
+                                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                    <span>Youtube</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://api.whatsapp.com/send?phone=5511997898054" target="_blank" title="Youtube">
+                                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                    <span>WhatsApp</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:contato@flordezaya.com.br" target="_blank" title="Youtube">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span>Email</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <hr />
-            <!--
-                You are freely remove or change this copyright notice below.
-                If you like SimplCommerce and want to help us continue to develop it then
-                you can donate us at https://opencollective.com/simplcommerce. Thanks
-            -->
-            <p class="pull-left">&copy; @DateTime.Now.Year - SimplCommerce</p>
-            <p class="pull-right">Powered by <a href="http://www.SimplCommerce.com"><strong>SimplCommerce</strong></a></p>
+            <!-- You are freely remove or change this copyright notice below. If you like SimplCommerce and want to help us continue to develop it then you can donate us at https://opencollective.com/simplcommerce. Thanks -->
+            <p class="pull-left" style="font-size:12px">&copy; 2022 - Flor de Zaya</p>
+            <p class="pull-right" style="font-size:12px">Desenvolvido por <a href="/"><strong>Connexio</strong></a></p>
         </div>
     </div>
     <div id="shopModal" class="modal fade" tabindex="-1" role="dialog">
@@ -98,8 +124,8 @@
         </div>
     </div>
     <script>
-            window.simplGlobalSetting = {};
-            window.simplGlobalSetting.lang = '@CultureInfo.CurrentCulture.Name';
+        window.simplGlobalSetting = {};
+        window.simplGlobalSetting.lang = '@CultureInfo.CurrentCulture.Name';
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script simpl-append-version="true" src="~/lib/bootstrap4/js/bootstrap.js"></script>
@@ -107,8 +133,7 @@
     <script simpl-append-version="true" src="~/lib/matchheight/jquery.matchHeight.js"></script>
     <script simpl-append-version="true" src="~/lib/toastr/build/toastr.min.js"></script>
     <script simpl-append-version="true" src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
-    <script simpl-append-version="true" src="~/lib/signalr/dist/browser/signalr.js"></script>
-    @if(CultureInfo.CurrentCulture.Name != SimplCommerce.Infrastructure.GlobalConfiguration.DefaultCulture)
+    <script simpl-append-version="true" src="~/lib/signalr/dist/browser/signalr.js"></script>    @if (CultureInfo.CurrentCulture.Name != SimplCommerce.Infrastructure.GlobalConfiguration.DefaultCulture)
     {
         <script simpl-append-version="true" src="~/lib/bootstrap-star-rating/js/locales/@(CultureInfo.CurrentCulture.Name).js"></script>
     }
@@ -117,7 +142,6 @@
     <script simpl-append-version="true" src="~/_content/SimplCommerce.Module.ProductComparison/product-comparison.js"></script>
     <script simpl-append-version="true" src="~/_content/SimplCommerce.Module.WishList/wishlist.js"></script>
     @RenderSection("scripts", required: false)
-
     <partial name="_AnalyticsScript" />
 </body>
 </html>
