@@ -66,10 +66,8 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                 return Redirect($"/");
             }
 
-            return Redirect($"~/user/orders/{Id}");
+            return Redirect($"~/user/orders/{Id.OnlyDigits()}");
         }
-
-
 
         [HttpPost("fl")]
         public async Task<IActionResult> Failure()
@@ -87,7 +85,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                 return Redirect($"/");
             }
 
-            return Redirect($"~/user/orders/{Id}");
+            return Redirect($"~/user/orders/{Id.OnlyDigits()}");
         }
     }
 }
