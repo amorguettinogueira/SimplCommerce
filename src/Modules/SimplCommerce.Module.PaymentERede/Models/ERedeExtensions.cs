@@ -62,5 +62,37 @@ namespace SimplCommerce.Module.PaymentERede.Models
 
         public static bool Int32InRange(this string value, int min, int max) =>
             string.IsNullOrEmpty(value) ? false : int.TryParse(value, out var result) && (result >= min && result <= max);
+
+        public static void Log2Console(this HttpRequest request, string start = "In", string stop = "Out")
+        {
+            Console.WriteLine(start);
+            foreach (var item in request.Query)
+            {
+                Console.WriteLine(
+                    $"Query {item.Key} = {item.Value}"
+                    );
+            }
+            foreach (var item in request.Headers)
+            {
+                Console.WriteLine(
+                    $"Headers {item.Key} = {item.Value}"
+                    );
+            }
+            foreach (var item in request.RouteValues)
+            {
+                Console.WriteLine(
+                    $"RouteValues {item.Key} = {item.Value}"
+                    );
+            }
+            foreach (var item in request.Form)
+            {
+                Console.WriteLine(
+                    $"Form {item.Key} = {item.Value}"
+                    );
+            }
+            Console.WriteLine($"QueryString {request.QueryString}");
+            Console.WriteLine($"ToString() {request}");
+            Console.WriteLine(stop);
+        }
     }
 }

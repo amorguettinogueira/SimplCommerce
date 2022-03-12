@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SimplCommerce.Infrastructure.Data;
+using SimplCommerce.Module.Orders.Services;
 using SimplCommerce.Module.PaymentERede.Areas.PaymentERede.ViewModels;
 using SimplCommerce.Module.PaymentERede.Models;
 using SimplCommerce.Module.Payments.Models;
@@ -19,10 +18,14 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
     public class ERedeApiController : Controller
     {
         private readonly IRepositoryWithTypedId<PaymentProvider, string> _paymentProviderRepository;
+        private readonly IOrderService orderService;
 
-        public ERedeApiController(IRepositoryWithTypedId<PaymentProvider, string> paymentProviderRepository)
+        public ERedeApiController(
+            IRepositoryWithTypedId<PaymentProvider, string> paymentProviderRepository,
+            IOrderService orderService)
         {
             _paymentProviderRepository = paymentProviderRepository;
+            this.orderService = orderService;
         }
 
         [HttpGet("config")]
@@ -50,55 +53,41 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("sc")]
         public async Task<IActionResult> Success()
         {
-            Console.WriteLine("Success in");
-            Log(Request);
-            Console.WriteLine("Success out");
-            return BadRequest(ModelState);
+            //Request.Log2Console("Failure in", "Failure out");
+            string Id = string.Empty;
+
+            if (Request.Form["returnCode"] == "00")
+            {
+                Id = Request.Form["reference"];
+            }
+
+            if (string.IsNullOrEmpty(Id))
+            {
+                return Redirect($"/");
+            }
+
+            return Redirect($"~/user/orders/{Id}");
         }
 
-        private void Log(HttpRequest Request)
-        {
-            foreach (var item in Request.Query)
-            {
-                Console.WriteLine(
-                    $"Query {item.Key} = {item.Value}"
-                    );
-            }
-            foreach (var item in Request.Headers)
-            {
-                Console.WriteLine(
-                    $"Headers {item.Key} = {item.Value}"
-                    );
-            }
-            foreach (var item in Request.RouteValues)
-            {
-                Console.WriteLine(
-                    $"RouteValues {item.Key} = {item.Value}"
-                    );
-            }
-            foreach (var item in Request.Form)
-            {
-                Console.WriteLine(
-                    $"Form {item.Key} = {item.Value}"
-                    );
-            }
-            foreach (var item in Request.Form)
-            {
-                Console.WriteLine(
-                    $"Form {item.Key} = {item.Value}"
-                    );
-            }
-            Console.WriteLine($"QueryString {Request.QueryString}");
-            Console.WriteLine($"ToString() {Request}");
-        }
+
 
         [HttpPost("fl")]
         public async Task<IActionResult> Failure()
         {
-            Console.WriteLine("Failure in");
-            Log(Request);
-            Console.WriteLine("Failure out");
-            return BadRequest(ModelState);
+            //Request.Log2Console("Failure in", "Failure out");
+            string Id = string.Empty;
+
+            if (Request.Form["returnCode"] == "00")
+            {
+                Id = Request.Form["reference"];
+            }
+
+            if (string.IsNullOrEmpty(Id))
+            {
+                return Redirect($"/");
+            }
+
+            return Redirect($"~/user/orders/{Id}");
         }
     }
 }
