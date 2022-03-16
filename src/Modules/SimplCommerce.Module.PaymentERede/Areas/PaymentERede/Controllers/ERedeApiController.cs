@@ -53,7 +53,8 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         [HttpPost("sc")]
         public async Task<IActionResult> Success()
         {
-            //Request.Log2Console("Failure in", "Failure out");
+            Request.Log2Console("Success in", "Success out");
+
             string Id = string.Empty;
 
             if (Request.Form["returnCode"] == "00")
@@ -61,12 +62,23 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                 Id = Request.Form["reference"];
             }
 
+            Id = Id.OnlyDigits();
+
             if (string.IsNullOrEmpty(Id))
             {
                 return Redirect($"/");
             }
 
-            return Redirect($"~/user/orders/{Id.OnlyDigits()}");
+            //var payment = new Payment()
+            //{
+            //    OrderId = int.Parse(Id),
+            //    PaymentFee = order.PaymentFeeAmount,
+            //    Amount = order.OrderTotal,
+            //    PaymentMethod = "Paypal Express",
+            //    CreatedOn = DateTimeOffset.UtcNow,
+            //};
+
+            return Redirect($"~/user/orders/{Id}");
         }
 
         [HttpPost("fl")]
