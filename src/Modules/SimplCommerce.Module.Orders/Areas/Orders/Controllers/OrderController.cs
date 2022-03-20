@@ -164,7 +164,7 @@ namespace SimplCommerce.Module.Orders.Areas.Orders.Controllers
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await cartService.GetActiveCart(currentUser.Id);
 
-            if (cart.LockedOnCheckout)
+            if (cart != null && cart.LockedOnCheckout)
             {
                 await cartService.UnlockCart(cart);
             }
