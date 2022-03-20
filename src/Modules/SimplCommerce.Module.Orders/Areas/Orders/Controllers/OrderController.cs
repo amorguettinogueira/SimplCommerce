@@ -8,6 +8,7 @@ using SimplCommerce.Module.Core.Extensions;
 using SimplCommerce.Module.Core.Services;
 using SimplCommerce.Module.Orders.Areas.Orders.ViewModels;
 using SimplCommerce.Module.Orders.Models;
+using SimplCommerce.Module.ShoppingCart.Services;
 
 namespace SimplCommerce.Module.Orders.Areas.Orders.Controllers
 {
@@ -19,13 +20,19 @@ namespace SimplCommerce.Module.Orders.Areas.Orders.Controllers
         private readonly IRepository<Order> _orderRepository;
         private readonly IWorkContext _workContext;
         private readonly ICurrencyService _currencyService;
+        private readonly ICartService cartService;
 
-        public OrderController(IRepository<Order> orderRepository, IWorkContext workContext, IMediaService mediaService, ICurrencyService currencyService)
+        public OrderController(IRepository<Order> orderRepository,
+                               IWorkContext workContext,
+                               IMediaService mediaService,
+                               ICurrencyService currencyService,
+                               ICartService cartService)
         {
             _orderRepository = orderRepository;
             _workContext = workContext;
             _mediaService = mediaService;
             _currencyService = currencyService;
+            this.cartService = cartService;
         }
 
         [HttpGet("user/orders")]
@@ -142,6 +149,32 @@ namespace SimplCommerce.Module.Orders.Areas.Orders.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet("order/replay")]
+        public async Task<IActionResult> Replay(long orderId)
+        {
+            var order = _orderRepository.Query().Include(x => x.OrderItems).Where(x => x.Id == orderId).FirstOrDefault();
+
+            if (order == null)
+            {
+                return Redirect("~/");
+            }
+
+            var currentUser = await _workContext.GetCurrentUser();
+            var cart = await cartService.GetActiveCart(currentUser.Id);
+
+            if (cart.LockedOnCheckout)
+            {
+                await cartService.UnlockCart(cart);
+            }
+
+            foreach (var item in order.OrderItems)
+            {
+                var result = await cartService.AddToCart(currentUser.Id, item.ProductId, item.Quantity);
+            }
+
+            return Redirect("~/cart");
         }
     }
 }

@@ -5,10 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Module.Core.Extensions;
-using SimplCommerce.Module.Orders.Services;
 using SimplCommerce.Module.Payments.Areas.Payments.ViewModels;
 using SimplCommerce.Module.Payments.Models;
-using SimplCommerce.Module.ShoppingCart.Models;
 using SimplCommerce.Module.ShoppingCart.Services;
 
 namespace SimplCommerce.Module.Payments.Areas.Payments.Controllers
@@ -21,17 +19,14 @@ namespace SimplCommerce.Module.Payments.Areas.Payments.Controllers
     {
         private readonly IRepositoryWithTypedId<PaymentProvider, string> _paymentProviderRepository;
         private readonly ICartService _cartService;
-        private readonly IOrderService _orderService;
         private readonly IWorkContext _workContext;
 
         public CheckoutController(IRepositoryWithTypedId<PaymentProvider, string> paymentProviderRepository,
             ICartService cartService,
-            IOrderService orderService,
             IWorkContext workContext)
         {
             _paymentProviderRepository = paymentProviderRepository;
             _cartService = cartService;
-            _orderService = orderService;
             _workContext = workContext;
         }
 
@@ -40,7 +35,7 @@ namespace SimplCommerce.Module.Payments.Areas.Payments.Controllers
         {
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCart(currentUser.Id);
-            if(cart == null)
+            if (cart == null)
             {
                 return Redirect("~/");
             }

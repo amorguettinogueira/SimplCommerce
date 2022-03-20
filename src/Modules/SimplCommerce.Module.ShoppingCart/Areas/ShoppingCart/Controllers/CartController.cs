@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using SimplCommerce.Infrastructure.Data;
-using SimplCommerce.Module.Catalog.Models;
 using SimplCommerce.Module.Core.Extensions;
 using SimplCommerce.Module.Core.Services;
 using SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.ViewModels;
@@ -90,7 +89,7 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
         {
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCartDetails(currentUser.Id);
-            if(cart == null)
+            if (cart == null)
             {
                 cart = new CartVm(_currencyService);
             }
@@ -101,7 +100,7 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
         [HttpPost("cart/update-item-quantity")]
         public async Task<IActionResult> UpdateQuantity([FromBody] CartQuantityUpdate model)
         {
-            if(model.Quantity <= 0)
+            if (model.Quantity <= 0)
             {
                 return Ok(new { Error = true, Message = _localizer["The quantity must be larger than zero"].Value });
             }
@@ -124,7 +123,7 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
                 return NotFound();
             }
 
-            if(model.Quantity > cartItem.Quantity) // always allow user to descrease the quality
+            if (model.Quantity > cartItem.Quantity) // always allow user to descrease the quality
             {
                 if (cartItem.Product.StockTrackingIsEnabled && cartItem.Product.StockQuantity < model.Quantity)
                 {
@@ -143,7 +142,7 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
         {
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCart(currentUser.Id);
-            if(cart == null)
+            if (cart == null)
             {
                 return NotFound();
             }
@@ -153,7 +152,7 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
                 return CreateCartLockedResult();
             }
 
-            var validationResult =  await _cartService.ApplyCoupon(cart.Id, model.CouponCode);
+            var validationResult = await _cartService.ApplyCoupon(cart.Id, model.CouponCode);
             if (validationResult.Succeeded)
             {
                 var cartVm = await _cartService.GetActiveCartDetails(currentUser.Id);
@@ -168,7 +167,7 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
         {
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCart(currentUser.Id);
-            if(cart == null)
+            if (cart == null)
             {
                 return NotFound();
             }

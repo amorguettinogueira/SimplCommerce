@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SimplCommerce.Infrastructure.Data;
@@ -29,6 +30,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
         private readonly IRepository<Payment> paymentRepository;
         private readonly IRepository<Order> orderRepository;
         private readonly IMediator mediator;
+        private readonly IStringLocalizer localizer;
         private readonly ILogger<ERedeApiController> logger;
 
         public ERedeApiController(
@@ -37,13 +39,15 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             IRepository<Payment> paymentRepository,
             IRepository<Order> orderRepository,
             IMediator mediator,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IStringLocalizerFactory stringLocalizerFactory)
         {
             this.paymentProviderRepository = paymentProviderRepository;
             this.paymentERedeRepository = paymentERedeRepository;
             this.paymentRepository = paymentRepository;
             this.orderRepository = orderRepository;
             this.mediator = mediator;
+            localizer = stringLocalizerFactory.Create(null);
             this.logger = loggerFactory.CreateLogger<ERedeApiController>();
         }
 
@@ -123,8 +127,9 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                     try
                     {
                         var oldStatus = order.OrderStatus;
+
                         order.OrderStatus = paymentRede.returnCode == "00" ? OrderStatus.PaymentReceived : OrderStatus.PaymentFailed;
-                        order.OrderNote = paymentRede.returnCode == "00" ? string.Empty : $"Mensagem de retorno eRede: {paymentRede.returnMessage}";
+                        order.OrderNote += paymentRede.returnCode == "00" ? string.Empty : $"\nResposta Rede => {DateTime.Now}: {localizer.GetString(order.OrderStatus.ToString())} [ {paymentRede.threeDSecureReturnMessage} | {paymentRede.returnMessage} ]";
 
                         var orderStatusChanged = new OrderChanged
                         {

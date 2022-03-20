@@ -75,7 +75,7 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
                 return NotFound();
             }
 
-            var orderCreateResult = await _orderService.CreateOrder(cart.Id, PaymentProviderHelper.ERedeProviderId, 0);
+            var orderCreateResult = await _orderService.CreateOrder(cart.Id, PaymentProviderHelper.ERedeProviderId, 0, OrderStatus.PendingPayment);
 
             if (!orderCreateResult.Success)
             {
@@ -109,8 +109,8 @@ namespace SimplCommerce.Module.PaymentERede.Areas.PaymentERede.Controllers
             // Autoriza a transação
             var response = new eRede.eRede(store).create(transaction, Request.Headers.UserAgent);
 
-            Console.WriteLine(response.returnCode);
-            Console.WriteLine(response.threeDSecure.url);
+            //Console.WriteLine(response.returnCode);
+            //Console.WriteLine(response.threeDSecure.url);
 
             if (response.returnCode == "220")
             {

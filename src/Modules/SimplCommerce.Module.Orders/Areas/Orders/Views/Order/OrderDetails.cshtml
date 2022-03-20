@@ -1,4 +1,5 @@
 ﻿@model SimplCommerce.Module.Orders.Areas.Orders.ViewModels.OrderDetailVm
+@using SimplCommerce.Module.Orders.Models
 
 @{
     ViewData["Title"] = Localizer["Order detail"];
@@ -67,7 +68,14 @@
             </tbody>
         </table>
         <div class="row">
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <div><strong>Notas:</strong><br/>@Model.OrderNote</div>
+                <div>
+                    @if(Model.OrderStatus == (int)OrderStatus.Canceled){
+                        <a class="btn btn-success mt-2" id="retry" asp-area="Orders" asp-controller="Order" asp-action="replay" asp-route-orderId="@Model.Id">Refazer o pedido</a>
+                    }
+                </div>
+            </div>
             <div class="col-md-6">
                 <table class="table table-borderless">
                     <tr>
