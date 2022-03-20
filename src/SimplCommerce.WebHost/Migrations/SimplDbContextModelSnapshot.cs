@@ -17,7 +17,7 @@ namespace SimplCommerce.WebHost.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -2660,6 +2660,15 @@ namespace SimplCommerce.WebHost.Migrations
                         },
                         new
                         {
+                            Id = "eRede",
+                            AdditionalSettings = "{\"Sandbox\": \"true\", \"RedePV\" : \"\", \"RedeToken\" : \"\", \"SoftDescriptor\" : \"\", \"QtdeParcelas\" : 0, \"ValorMinimoParcelamento\" : 0,}",
+                            ConfigureUrl = "payments-erede-config",
+                            IsEnabled = true,
+                            LandingViewComponentName = "ERedeLanding",
+                            Name = "eRede"
+                        },
+                        new
+                        {
                             Id = "PaypalExpress",
                             AdditionalSettings = "{ \"IsSandbox\":true, \"ClientId\":\"\", \"ClientSecret\":\"\" }",
                             ConfigureUrl = "payments-paypalExpress-config",
@@ -2703,6 +2712,85 @@ namespace SimplCommerce.WebHost.Migrations
                             LandingViewComponentName = "CashfreeLanding",
                             Name = "Cashfree Payment Gateway"
                         });
+                });
+
+            modelBuilder.Entity("SimplCommerce.Module.PaymentsERede.Models.ERedePayment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("authorizationCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("avsReturnCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("avsReturnMessage")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("brandName")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("brandReturnCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("brandReturnMessage")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("date")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("expiresAt")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("nsu")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("reference")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
+                    b.Property<string>("returnCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("returnMessage")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("threeDSecureReturnCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("threeDSecureReturnMessage")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("tid")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("time")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("reference");
+
+                    b.ToTable("PaymentsERede_ERedePayment", (string)null);
                 });
 
             modelBuilder.Entity("SimplCommerce.Module.Pricing.Models.CartRule", b =>

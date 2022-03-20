@@ -30,6 +30,8 @@ namespace SimplCommerce.WebHost
             GlobalConfiguration.ContentRootPath = contentRootPath;
             services.AddModules();
             services.AddCustomizedDataStore(_configuration);
+            services.AddDbContextPool<SimplDbContext>(options => { options.EnableSensitiveDataLogging(); });
+
             var _serviceProvider = services.BuildServiceProvider();
 
             return _serviceProvider.GetRequiredService<SimplDbContext>();

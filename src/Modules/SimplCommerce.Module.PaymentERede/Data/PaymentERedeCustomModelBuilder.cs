@@ -2,6 +2,7 @@
 using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Module.PaymentERede.Models;
 using SimplCommerce.Module.Payments.Models;
+using SimplCommerce.Module.PaymentsERede.Models;
 
 namespace SimplCommerce.Module.PaymentERede.Data
 {
@@ -9,8 +10,9 @@ namespace SimplCommerce.Module.PaymentERede.Data
     {
         public void Build(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ERedePayment>().HasIndex(x => x.reference);
+
             modelBuilder.Entity<PaymentProvider>().HasData(
-                //new PaymentProvider("Braintree")
                 new PaymentProvider(PaymentProviderHelper.ERedeProviderId)
                 {
                     Name = PaymentProviderHelper.ERedeProviderId,

@@ -305,6 +305,34 @@ namespace SimplCommerce.WebHost.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentsERede_ERedePayment",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    reference = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    tid = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    nsu = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    authorizationCode = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    expiresAt = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    date = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    time = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    returnCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    returnMessage = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    avsReturnCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    avsReturnMessage = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    threeDSecureReturnCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    threeDSecureReturnMessage = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    brandReturnCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    brandReturnMessage = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    brandName = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentsERede_ERedePayment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pricing_CartRule",
                 columns: table => new
                 {
@@ -2242,6 +2270,7 @@ namespace SimplCommerce.WebHost.Migrations
                     { "Braintree", "{\"PublicKey\": \"6j4d7qspt5n48kx4\", \"PrivateKey\" : \"bd1c26e53a6d811243fcc3eb268113e1\", \"MerchantId\" : \"ncsh7wwqvzs3cx9q\", \"IsProduction\" : \"false\"}", "payments-braintree-config", true, "BraintreeLanding", "Braintree" },
                     { "Cashfree", "{ \"IsSandbox\":true, \"AppId\":\"358035b02486f36ca27904540853\", \"SecretKey\":\"26f48dcd6a27f89f59f28e65849e587916dd57b9\" }", "payments-cashfree-config", true, "CashfreeLanding", "Cashfree Payment Gateway" },
                     { "CoD", null, "payments-cod-config", true, "CoDLanding", "Cash On Delivery" },
+                    { "eRede", "{\"Sandbox\": \"true\", \"RedePV\" : \"\", \"RedeToken\" : \"\", \"SoftDescriptor\" : \"\", \"QtdeParcelas\" : 0, \"ValorMinimoParcelamento\" : 0,}", "payments-erede-config", true, "ERedeLanding", "eRede" },
                     { "MomoPayment", "{\"IsSandbox\":true,\"PartnerCode\":\"MOMOIQA420180417\",\"AccessKey\":\"SvDmj2cOTYZmQQ3H\",\"SecretKey\":\"PPuDXq1KowPT1ftR8DvlQTHhC03aul17\",\"PaymentFee\":0.0}", "payments-momo-config", true, "MomoLanding", "Momo Payment" },
                     { "NganLuong", "{\"IsSandbox\":true, \"MerchantId\": 47249, \"MerchantPassword\": \"e530745693dbde678f9da98a7c821a07\", \"ReceiverEmail\": \"nlqthien@gmail.com\"}", "payments-nganluong-config", true, "NganLuongLanding", "Ngan Luong Payment" },
                     { "PaypalExpress", "{ \"IsSandbox\":true, \"ClientId\":\"\", \"ClientSecret\":\"\" }", "payments-paypalExpress-config", true, "PaypalExpressLanding", "Paypal Express" },
@@ -2704,6 +2733,11 @@ namespace SimplCommerce.WebHost.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentsERede_ERedePayment_reference",
+                table: "PaymentsERede_ERedePayment",
+                column: "reference");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pricing_CartRuleCategory_CategoryId",
                 table: "Pricing_CartRuleCategory",
                 column: "CategoryId");
@@ -3026,6 +3060,9 @@ namespace SimplCommerce.WebHost.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payments_PaymentProvider");
+
+            migrationBuilder.DropTable(
+                name: "PaymentsERede_ERedePayment");
 
             migrationBuilder.DropTable(
                 name: "Pricing_CartRuleCategory");

@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SimplCommerce.Infrastructure;
 using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Module.Core.Models;
 using SimplCommerce.Module.Orders.Areas.Orders.ViewModels;
+using SimplCommerce.Module.Orders.Events;
 using SimplCommerce.Module.Orders.Models;
 using SimplCommerce.Module.Pricing.Services;
 using SimplCommerce.Module.ShippingPrices.Services;
 using SimplCommerce.Module.ShoppingCart.Models;
-using SimplCommerce.Module.Tax.Services;
-using SimplCommerce.Module.Orders.Events;
 using SimplCommerce.Module.ShoppingCart.Services;
+using SimplCommerce.Module.Tax.Services;
 
 namespace SimplCommerce.Module.Orders.Services
 {
@@ -35,7 +35,6 @@ namespace SimplCommerce.Module.Orders.Services
         public OrderService(IRepository<Order> orderRepository,
             IRepository<Cart> cartRepository,
             ICouponService couponService,
-
             IRepository<CartItem> cartItemRepository,
             IRepository<OrderItem> orderItemRepository,
             ITaxService taxService,

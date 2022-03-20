@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using SimplCommerce.Infrastructure.Models;
-using SimplCommerce.Module.Orders.Models;
 
 namespace SimplCommerce.Module.PaymentsERede.Models
 {
@@ -9,30 +7,54 @@ namespace SimplCommerce.Module.PaymentsERede.Models
     {
         public ERedePayment()
         {
-            CreatedOn = DateTimeOffset.Now;
-            LatestUpdatedOn = DateTimeOffset.Now;
         }
 
-        public long OrderId { get; set; }
+        [StringLength(60)]
+        public string reference { get; set; }
 
-        public Order Order { get; set; }
+        [StringLength(40)]
+        public string tid { get; set; }
 
-        public DateTimeOffset CreatedOn { get; set; }
+        [StringLength(20)]
+        public string nsu { get; set; }
 
-        public DateTimeOffset LatestUpdatedOn { get; set; }
+        [StringLength(20)]
+        public string authorizationCode { get; set; }
 
-        public decimal Amount { get; set; }
+        [StringLength(20)]
+        public string expiresAt { get; set; }
 
-        public decimal PaymentFee { get; set; }
+        [StringLength(10)]
+        public string date { get; set; }
 
-        [StringLength(450)]
-        public string PaymentMethod { get; set; }
+        [StringLength(10)]
+        public string time { get; set; }
 
-        [StringLength(450)]
-        public string GatewayTransactionId { get; set; }
+        [StringLength(10)]
+        public string returnCode { get; set; }
 
-        public int Status { get; set; }
+        [StringLength(250)]
+        public string returnMessage { get; set; }
 
-        public string FailureMessage { get; set; }
+        [StringLength(10)]
+        public string avsReturnCode { get; set; }
+
+        [StringLength(250)]
+        public string avsReturnMessage { get; set; }
+
+        [StringLength(10)]
+        public string threeDSecureReturnCode { get; set; }
+
+        [StringLength(250)]
+        public string threeDSecureReturnMessage { get; set; }
+
+        [StringLength(10)]
+        public string brandReturnCode { get; set; }
+
+        [StringLength(250)]
+        public string brandReturnMessage { get; set; }
+
+        [StringLength(40)]
+        public string brandName { get; set; }
     }
 }
