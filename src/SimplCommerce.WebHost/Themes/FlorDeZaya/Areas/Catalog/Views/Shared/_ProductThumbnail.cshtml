@@ -1,37 +1,55 @@
 ﻿@model SimplCommerce.Module.Catalog.Areas.Catalog.ViewModels.ProductThumbnail
 
-<div class="card mb-4">
-    <input type="hidden" id="productId" value="@Model.Id" />
-    <a href="~/@Model.Slug">
-        <img alt="@Model.Name" class="card-img-top" src="@Model.ThumbnailUrl">
-        <div class="card-body">
-            <h5 class="card-title product-name">@Model.Name</h5>
-            <p class="card-text product-price">
-                @if (Model.IsCallForPricing)
-                {
-                    @Localizer["Call for pricing"]
-                }
-                else
-                {
-                    @Model.CalculatedProductPrice.PriceString
-                    if (Model.CalculatedProductPrice.PercentOfSaving > 0)
-                    {
-                        <span class="product-price-saving">-@(Model.CalculatedProductPrice.PercentOfSaving)%</span>
-                        <br />
-                        <span class="product-price-regular">@Model.CalculatedProductPrice.OldPriceString</span>
-                    }
-                }
-            </p>
-            <ul class="list-inline product-ratings">
-                <li><input type="hidden" value="@Model.RatingAverage" readonly="readonly" class="rating-loading" step="1" data-size="xs" data-show-clear="false" data-show-caption="false" /></li>
-                @if (Model.ReviewsCount > 0)
-                {
-                    <li class="product-review-list">
-                        <span>(@Model.ReviewsCount @Localizer["reviews"])</span>
-                    </li>
-                }
-            </ul>
-
+<div class="block text-center add-to-cart">
+    <form class="inline">
+        <input type="hidden" name="productId" value="@Model.Id" />
+        <div class="image" style="background-image: url(@Model.ThumbnailUrl);transform: rotate(0);">
+            <a class="stretched-link" href="~/@Model.Slug"></a>
         </div>
-    </a>
+        <div class="info">
+            <div class="flex-column d-flex flex-column">
+@*              <div class="cart">
+                    <button type="button" class="mb-0 sm-font">@Localizer["Add to cart"]</button>
+                    <!--button type="button" class="btn btn-lg btn-add-cart"></!--button-->
+                </div>*@
+                <button type="button" class="cart dflex-center btn-add-cart"><i class="fa-solid fa-cart-plus fa-xl"></i></button>
+                <a class="order dflex-center add-to-wishlist" href="#"><i class="fa-solid fa-face-grin-hearts fa-xl"></i></a>
+@*                <div class="order">
+                    <a class="mb-0 sm-font" href="#">@Localizer["Add to Wishlist"]</a>
+                    <!--a href="#" class="add-to-wishlist"></!--a-->
+                </div>*@
+            </div>
+            <div class="flex-column d-flex flex-column flex-grow-1" style="transform: rotate(0);">
+                <div class="text-left">
+                    <a class="stretched-link" href="~/@Model.Slug"><h5 class="mb-0 mt-2">@Model.Name</h5></a>
+                    <small class="text-muted mb-1">Men's Stylish Designed Shirt</small>
+                </div>
+                @*<div class="col-auto pull-left">*@
+                    @if (Model.IsCallForPricing)
+                    {
+                        <h5>@Localizer["Call for pricing"]</h5>
+                    }
+                    else
+                    {
+                        <h5>@Model.CalculatedProductPrice.PriceString</h5>
+                        if (Model.CalculatedProductPrice.PercentOfSaving > 0)
+                        {
+                            <p class="text-muted ml-2"><del>@Model.CalculatedProductPrice.OldPriceString</del>&nbsp;-@Model.CalculatedProductPrice.PercentOfSaving%</p>
+                        }
+                    }
+@*                </div>
+                <div class="col-auto pull-right">
+                    <ul class="list-inline product-ratings">
+                        <li><input type="hidden" value="@Model.RatingAverage" readonly="readonly" class="rating-loading" step="1" data-size="xs" data-show-clear="false" data-show-caption="false" /></li>
+                        @if (Model.ReviewsCount > 0)
+                        {
+                            <li class="product-review-list">
+                                <span>(@Model.ReviewsCount @Localizer["reviews"])</span>
+                            </li>
+                        }
+                    </ul>
+                </div>*@
+            </div>
+        </div>
+    </form>
 </div>

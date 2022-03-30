@@ -1,11 +1,69 @@
 ﻿@model SimplCommerce.Module.Catalog.Areas.Catalog.ViewModels.ProductWidgetComponentVm
 
-<h2>@Model.WidgetName</h2>
-<div class="row product-list">
+<h2>@Model.WidgetName normal</h2>
+
+<style>
+    .block {
+        position: relative;
+        width: 22%;
+        background-color: #4a4a4a;
+        padding: 0.25rem;
+        margin-bottom: 165px;
+    }
+    @@media screen and (max-width: 550px) {
+        .block {
+            width: 100%;
+        }
+    }
+    @@media screen and (max-width: 992px) {
+        .block {
+            width: 45%;
+        }
+    }
+    .image {
+        width:100%;
+        height:300px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+    }
+    .info {
+        position: absolute;
+        width: 98%;
+        top: 280px;
+        left: 1%;
+        border: 1px solid #4a4a4a;
+        background-color: #fff;
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .dflex-center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cart {
+        background-color: #26A69A;
+        color: #fff;
+        border: 2px solid #26A69A;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+    .sm-font {
+        font-size: 15px;
+    }
+    .order {
+        color: #26A69A;
+        border: 2px solid #26A69A;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+</style>
+
+<div class="row justify-content-between px-3 product-list">
     @foreach (var product in Model.Products)
     {
-        <div class="col-xs-6 col-md-3">
-            <partial name="/Areas/Catalog/Views/Shared/_ProductThumbnail.cshtml" model="product" />
-        </div>
+        <partial name="../../_ProductThumbnail.cshtml" model="product" />
     }
 </div>

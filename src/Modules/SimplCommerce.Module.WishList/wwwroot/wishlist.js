@@ -6,12 +6,13 @@ $(function () {
         var productId = $form.find('input[name=productId]').val();
         var quantity = $form.find('input[name=qty]').val();
         e.preventDefault();
+        quantity = quantity ? quantity : 1;
 
         $.ajax({
             type: 'POST',
             url: '/wishlist/add-item',
             data: JSON.stringify({ productId: productId, quantity: quantity }),
-            contentType: "application/json"  
+            contentType: "application/json"
         }).done(function (data) {
             $('#shopModal').find('.modal-content').html(data);
             $('#shopModal').modal('show');

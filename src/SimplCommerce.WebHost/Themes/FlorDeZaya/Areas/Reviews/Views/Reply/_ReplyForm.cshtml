@@ -9,7 +9,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form class="form-add-review-reply" asp-area="Reviews" asp-controller="Reply" asp-action="AddReply" method="post" role="form">
+    <form class="form-add-review-reply" asp-area="Reviews" asp-controller="Reply" asp-action="AddReply" method="post">
         <input asp-for="ReviewId" type="hidden" />
         <div class="form-group">
             <textarea asp-for="Comment" rows="3" placeholder="@Localizer["Your reply"]" maxlength="300" class="form-control"></textarea>

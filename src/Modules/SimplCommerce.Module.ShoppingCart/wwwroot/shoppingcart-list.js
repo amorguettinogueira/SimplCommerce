@@ -14,7 +14,8 @@
                     }
                     else {
                         vm.cart = result.data;
-                        $('.cart-badge .badge').text(vm.cart.items.length);
+                        //$('.cart-badge .badge').text(vm.cart.items.length);
+                        $('.cart-badge .badge').text(vm.cart.itemsCount);
                     }
                 }
 
@@ -27,7 +28,7 @@
                 };
 
                 vm.increaseQuantity = function increaseQuantity(item) {
-                    shoppingCartService.updateQuantity(item.id, item.quantity + 1 ).then(cartDataCallback);
+                    shoppingCartService.updateQuantity(item.id, item.quantity + 1).then(cartDataCallback);
                 };
 
                 vm.decreaseQuantity = function decreaseQuantity(item) {
@@ -61,7 +62,7 @@
                     });
                 };
 
-                 getShoppingCartItems();
+                getShoppingCartItems();
             }
         ]);
 })();

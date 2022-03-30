@@ -8,9 +8,9 @@
     <div class="col-md-8">
         @if (TempData["Error"] != null)
         {
-            <div class="alert alert-danger" role="alert">@TempData["Error"]</div>
+            <div class="alert alert-danger">@TempData["Error"]</div>
         }
-        <div id="paymentError" class="alert alert-danger d-none" role="alert"></div>
+        <div id="paymentError" class="alert alert-danger d-none"></div>
         <h3>@Localizer["Choose a payment methods"]</h3>
         <div class="row">
             @foreach (var paymentProvider in Model.PaymentProviders)

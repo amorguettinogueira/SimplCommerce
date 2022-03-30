@@ -3,44 +3,47 @@
 @inject IViewLocalizer Localizer
 
 <ul class="navbar-nav m-0">
+    @{
+        var itemId = 0;
+        var subItemId = 0;
+    }
     @foreach (var item in Model)
     {
         if (item.ChildItems.Any())
         {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">@item.Name</a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="/@item.Slug">@Localizer["All"] @item.Name</a>
-                            </li>
-                    @foreach (var childItem in item.ChildItems)
-                    {
-                        if (childItem.ChildItems.Any())
+            itemId++;
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navdrop_@itemId" href="#" data-bs-toggle="dropdown" aria-expanded="false">@item.Name</a>
+                <ul class="dropdown-menu" aria-labelledby="navdrop_@itemId">
+                    <li><a class="dropdown-item" href="/@item.Slug">@Localizer["All"] @item.Name</a></li>
+                @foreach (var childItem in item.ChildItems)
+                {
+                    if (childItem.ChildItems.Any())
                         {
-                                            <li>
-                                                <a class="dropdown-item dropdown-toggle" href="javascript:void(0);">@childItem.Name</a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item" href="/@childItem.Slug">@Localizer["All"] @childItem.Name</a>
-                                                    </li>
+                            subItemId++;
+                            <li class="nav-item dropdown">
+                                @*<a class="dropdown-item dropdown-toggle" href="javascript:void(0);"></a>*@
+                                <a class="nav-link dropdown-toggle" id="navdrop_@subItemId" href="#" data-bs-toggle="dropdown" aria-expanded="false">@childItem.Name</a>
+                                <ul class="dropdown-menu" aria-labelledby="navdrop_@subItemId">
+                                    <li><a class="dropdown-item" href="/@childItem.Slug">@Localizer["All"] @childItem.Name</a></li>
                                     @foreach (var childChildItem in childItem.ChildItems)
                                     {
-                                                            <li><a class="dropdown-item" href="/@childChildItem.Slug">@childChildItem.Name</a></li>
+                                        <li><a class="dropdown-item" href="/@childChildItem.Slug">@childChildItem.Name</a></li>
                                     }
-                                                </ul>
-                                            </li>
+                                </ul>
+                            </li>
                         }
-                        else
-                        {
-                                            <li><a class="dropdown-item" href="/@childItem.Slug">@childItem.Name</a></li>
-                        }
+                    else
+                    {
+                        <li><a class="dropdown-item" href="/@childItem.Slug">@childItem.Name</a></li>
                     }
-                        </ul>
-                    </li>
+                }
+                </ul>
+            </li>
         }
         else
         {
-                    <li class="nav-item"><a class="nav-link" href="/@item.Slug">@item.Name</a></li>
+            <li class="nav-item"><a class="nav-link" href="/@item.Slug">@item.Name</a></li>
         }
     }
 </ul>

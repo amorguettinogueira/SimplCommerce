@@ -52,7 +52,7 @@
             <div class="">{{item.commentText}}</div>
             <div>
                 <span class="r-time">{{item.createdOnRelative}}</span>
-                - <a data-toggle="collapse" href="#reply{{item.id}}" ng-click="vm.addReply(item)" role="button" aria-expanded="false" aria-controls="reply{{item.id}}">@Localizer["Reply"]</a>
+                - <a data-toggle="collapse" href="#reply{{item.id}}" ng-click="vm.addReply(item)" aria-expanded="false" aria-controls="reply{{item.id}}">@Localizer["Reply"]</a>
             </div>
             <div class="comment-reply">
                 <div ng-repeat="childItem in item.replies">
@@ -63,7 +63,7 @@
                     <div class="">{{childItem.commentText}}</div>
                     <div>
                         <span class="r-time">{{childItem.createdOnRelative}}</span>
-                        - <a data-toggle="collapse" href="#reply{{item.id}}" ng-click="vm.addReply(item)" role="button" aria-expanded="false" aria-controls="reply{{item.id}}">@Localizer["Reply"]</a>
+                        - <a data-toggle="collapse" href="#reply{{item.id}}" ng-click="vm.addReply(item)" aria-expanded="false" aria-controls="reply{{item.id}}">@Localizer["Reply"]</a>
                     </div>
                 </div>
                 <div class="collapse" id="reply{{item.id}}">

@@ -1,5 +1,5 @@
-﻿using SimplCommerce.Module.Core.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SimplCommerce.Module.Core.Services;
 
 namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.ViewModels
 {
@@ -87,18 +87,20 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.ViewModels
 
         public IList<CartItemVm> Items { get; set; } = new List<CartItemVm>();
 
+        public int ItemsCount { get; set; }
+
         public bool IsValid
         {
             get
             {
-                foreach(var item in Items)
+                foreach (var item in Items)
                 {
                     if (!item.IsProductAvailabeToOrder)
                     {
                         return false;
                     }
 
-                    if(item.ProductStockTrackingIsEnabled && item.ProductStockQuantity < item.Quantity)
+                    if (item.ProductStockTrackingIsEnabled && item.ProductStockQuantity < item.Quantity)
                     {
                         return false;
                     }

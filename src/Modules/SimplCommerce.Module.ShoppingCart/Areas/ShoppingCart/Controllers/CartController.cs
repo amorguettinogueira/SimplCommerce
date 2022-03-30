@@ -63,9 +63,13 @@ namespace SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.Controllers
             var currentUser = await _workContext.GetCurrentUser();
             var cart = await _cartService.GetActiveCartDetails(currentUser.Id);
 
+            var cartItemCount = 0;
+            foreach (var item in cart.Items)
+                cartItemCount += item.Quantity;
+
             var model = new AddToCartResultVm(_currencyService)
             {
-                CartItemCount = cart.Items.Count,
+                CartItemCount = cartItemCount,
                 CartAmount = cart.SubTotal
             };
 

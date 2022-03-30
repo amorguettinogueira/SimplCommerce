@@ -7,7 +7,7 @@
 
 @if (TempData["Error"] != null)
 {
-    <div class="alert alert-danger" role="alert">@TempData["Error"]</div>
+    <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
 <p>@localizedTextParts(0)<a href="~/user/orders/{Model}">@localizedTextParts(1)</a>@localizedTextParts(2)</p>

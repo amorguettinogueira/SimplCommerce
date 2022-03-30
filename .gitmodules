@@ -1,0 +1,3 @@
+[submodule "src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/bootstrap"]
+	path = src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/bootstrap
+	url = https://github.com/twbs/bootstrap.git

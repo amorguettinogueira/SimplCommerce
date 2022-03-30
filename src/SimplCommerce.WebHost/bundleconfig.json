@@ -31,11 +31,9 @@
   {
     "outputFileName": "wwwroot/themes/FlorDeZaya/site.min.css",
     "inputFiles": [
-      "wwwroot/themes/FlorDeZaya/extra.css",
-      "wwwroot/lib/bootstrap4/css/bootstrap.css",
-      "wwwroot/lib/font-awesome/css/font-awesome.css",
+      "wwwroot/themes/FlorDeZaya/site.css",
+      "wwwroot/themes/FlorDeZaya/fontawesome/css/all.css",
       "wwwroot/lib/bootstrap-star-rating/css/star-rating.css",
-      "wwwroot/lib/multi-dropdown-menu/css/bootstrap-4-navbar.css",
       "wwwroot/lib/toastr/build/toastr.min.css"
     ],
     "minify": {

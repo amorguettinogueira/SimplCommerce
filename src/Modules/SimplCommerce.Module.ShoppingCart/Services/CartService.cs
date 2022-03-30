@@ -3,13 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SimplCommerce.Infrastructure;
+using Microsoft.Extensions.Localization;
 using SimplCommerce.Infrastructure.Data;
-using SimplCommerce.Module.ShoppingCart.Models;
 using SimplCommerce.Module.Core.Services;
 using SimplCommerce.Module.Pricing.Services;
 using SimplCommerce.Module.ShoppingCart.Areas.ShoppingCart.ViewModels;
-using Microsoft.Extensions.Localization;
+using SimplCommerce.Module.ShoppingCart.Models;
 
 namespace SimplCommerce.Module.ShoppingCart.Services
 {
@@ -109,7 +108,7 @@ namespace SimplCommerce.Module.ShoppingCart.Services
                 cartItem.Quantity = cartItem.Quantity + quantity;
             }
 
-            await  _cartRepository.SaveChangesAsync();
+            await _cartRepository.SaveChangesAsync();
 
             addToCartResult.Success = true;
             return addToCartResult;
@@ -159,7 +158,11 @@ namespace SimplCommerce.Module.ShoppingCart.Services
                     VariationOptions = CartItemVm.GetVariationOption(x.Product)
                 }).ToList();
 
-            cartVm.SubTotal = cartVm.Items.Sum(x => x.Quantity * x.ProductPrice);
+            foreach (var x in cartVm.Items)
+            {
+                cartVm.ItemsCount += x.Quantity;
+                cartVm.SubTotal += x.Quantity * x.ProductPrice;
+            }
             if (!string.IsNullOrWhiteSpace(cartVm.CouponCode))
             {
                 var cartInfoForCoupon = new CartInfoForCoupon
@@ -237,13 +240,13 @@ namespace SimplCommerce.Module.ShoppingCart.Services
                     }
                 }
 
-               await _cartRepository.SaveChangesAsync();
+                await _cartRepository.SaveChangesAsync();
             }
         }
 
         public async Task UnlockCart(Cart cart)
         {
-            if(cart == null)
+            if (cart == null)
             {
                 throw new ArgumentNullException(nameof(cart));
             }

@@ -17,16 +17,16 @@ $(function () {
             <p>Cart is being locked for checkout.Please complete or cancel the checkout first </p> \
             <p><a href="/checkout/shipping" class="btn btn btn-primary">Checkout</a></p> \
         </div > ';
-   
+
 
     $('body').on('click', '.btn-add-cart', function () {
         $('#productOverview').modal('hide');
         var quantity,
             $form = $(this).closest("form"),
-            productId = $(this).closest("form").find('input[name=productId]').val(),
+            productId = $form.find('input[name=productId]').val(),
             $quantityInput = $form.find('.quantity-field');
 
-        quantity = $quantityInput.length === 1 ? $quantityInput.val() : 1;
+        quantity = $quantityInput.val() ? $quantityInput.val() : 1;
 
         $.ajax({
             type: 'POST',

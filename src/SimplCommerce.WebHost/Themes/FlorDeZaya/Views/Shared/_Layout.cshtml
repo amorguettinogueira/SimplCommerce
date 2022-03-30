@@ -5,46 +5,22 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewData["Title"] - SimplCommerce</title>    @RenderSection("additionalMeta", false)
-    <link simpl-append-version="true" rel="stylesheet" href="~/libs.min.css" />
-    <link simpl-append-version="true" rel="stylesheet" href="~/_content/SimplCommerce.Module.Core/site.css" />
+    <title>@ViewData["Title"] - Flor de Zaya</title> @RenderSection("additionalMeta", false)
+    <link simpl-append-version="true" rel="stylesheet" href="~/themes/FlorDeZaya/site.min.css" />
     <script simpl-append-version="true" src="~/lib/angular/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
-    </script>
     @RenderSection("head", required: false)
 </head>
 <body>
-    @*<div class="top-bar">
+    <a href="https://api.whatsapp.com/send?phone=5511997898054" class="a-float" target="_blank">
+        <img src="/user-content/ZayaWhats.png" class="img-float" alt="Flor de Zaya">
+    </a>
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-        <ul class="nav justify-content-end">
-        <partial name="_SelectLanguagePartial" />
-        <partial name="_LoginPartial" />
-        </ul>
-        </div>
-        </div>*@
-    <div class="main-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-4 logo">
-                    <a asp-area="Core" asp-controller="Home" asp-action="Index">
-                        <img alt="SimplCommerce" src="~/_content/SimplCommerce.Module.Core/Logo_SimplCommerce.png" />
-                    </a>
-                </div>
-                <div class="col-10 col-md-5 col-lg-7 search-box">
-                    @await Component.InvokeAsync("SearchForm")
-                </div>
-                <div class="col-2 col-md-1 cart-btn">
-                    @await Component.InvokeAsync("CartBadge")
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="navbar navbar-expand-lg navbar-light bg-light btco-hover-menu main-nav">
-        <div class="container">
+            <a class="navbar-brand p-0" style="font-family:beauty_flowerregular;font-size:32px;position:absolute;top:0px" href="/">Flor de Zaya</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarMain" style="justify-content: space-between">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarMain" style="margin-left:150px">
                 @await Component.InvokeAsync("CategoryMenu")
                 <ul class="form-inline m-0 pull-right navbar-nav">
                     <partial name="_LoginPartial" />
@@ -52,8 +28,20 @@
             </div>
         </div>
     </div>
+    <div class="py-2 bg-secondary sticky-top">
+        <div class="container">
+            <div class="row">
+                <div class="col">                    
+                    @await Component.InvokeAsync("SearchForm")
+                </div>
+                <div class="col-auto pull-right" style="margin-right:10px">
+                    @await Component.InvokeAsync("CartBadge")
+                </div>
+            </div>
+        </div>
+    </div>
     <partial name="_CookieConsentPartial" />
-    <div class="container body-content clearfix">
+    <div class="container-fluid px-5 py-5 mx-auto">
         @RenderBody()
     </div>
     <div class="footer-content">
@@ -72,52 +60,58 @@
                     <ul class="list-unstyled">
                         <li>
                             <a href="https://www.instagram.com/flordezaya" target="_blank" title="Instagram">
-                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                <i class="fa-brands fa-instagram-square fa-xl"></i>
                                 <span>Instagram</span>
                             </a>
                         </li>
                         <li>
                             <a href="https://www.facebook.com/flordezaya" target="_blank" title="Facebook">
-                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                <i class="fa-brands fa-facebook-square fa-xl"></i>
                                 <span>Facebook</span>
                             </a>
                         </li>
                         <li>
                             <a href="/" target="_blank" title="Youtube">
-                                <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                <i class="fa-brands fa-youtube-square fa-xl"></i>
                                 <span>Youtube</span>
                             </a>
                         </li>
                         <li>
                             <a href="https://api.whatsapp.com/send?phone=5511997898054" target="_blank" title="Youtube">
-                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                <i class="fa-brands fa-whatsapp-square fa-xl"></i>
                                 <span>WhatsApp</span>
                             </a>
                         </li>
                         <li>
                             <a href="mailto:contato@flordezaya.com.br" target="_blank" title="Youtube">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <i class="fa-solid fa-square-envelope fa-xl"></i>
                                 <span>Email</span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <hr />
-            <!-- You are freely remove or change this copyright notice below. If you like SimplCommerce and want to help us continue to develop it then you can donate us at https://opencollective.com/simplcommerce. Thanks -->
-            <p class="pull-left" style="font-size:12px">&copy; 2022 - Flor de Zaya</p>
-            <p class="pull-right" style="font-size:12px">Desenvolvido por <a href="/"><strong>Connexio</strong></a></p>
         </div>
     </div>
-    <div id="shopModal" class="modal fade" tabindex="-1" role="dialog">
+    <div id="shopModal" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             </div>
         </div>
     </div>
-    <div id="productOverview" class="modal fade" tabindex="-1" role="dialog">
+    <div id="productOverview" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-padding">
+            </div>
+        </div>
+    </div>
+    <div class="bg-secondary">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <span class="pull-left py-2" style="font-size:14px;letter-spacing:1px">45.273.449/0001-61 Flor de Zaya Roupas Femininas &copy; 2022</span>
+                    <span class="pull-right py-2" style="font-size:14px;letter-spacing:1px">Desenvolvido por <a href="/"><strong>connexio</strong></a></span>
+                </div>
             </div>
         </div>
     </div>
@@ -125,13 +119,13 @@
         window.simplGlobalSetting = {};
         window.simplGlobalSetting.lang = '@CultureInfo.CurrentCulture.Name';
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script simpl-append-version="true" src="~/lib/bootstrap4/js/bootstrap.js"></script>
-    <script simpl-append-version="true" src="~/lib/multi-dropdown-menu/js/bootstrap-4-navbar.js"></script>
+    <script simpl-append-version="true" src="~/themes/FlorDeZaya/jquery/jquery-3.6.0.min.js"></script>
+    <script simpl-append-version="true" src="~/themes/FlorDeZaya/bootstrap/dist/js/bootstrap.js"></script>
     <script simpl-append-version="true" src="~/lib/matchheight/jquery.matchHeight.js"></script>
     <script simpl-append-version="true" src="~/lib/toastr/build/toastr.min.js"></script>
     <script simpl-append-version="true" src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
-    <script simpl-append-version="true" src="~/lib/signalr/dist/browser/signalr.js"></script>    @if (CultureInfo.CurrentCulture.Name != SimplCommerce.Infrastructure.GlobalConfiguration.DefaultCulture)
+    <script simpl-append-version="true" src="~/lib/signalr/dist/browser/signalr.js"></script>
+    @if (CultureInfo.CurrentCulture.Name != SimplCommerce.Infrastructure.GlobalConfiguration.DefaultCulture)
     {
         <script simpl-append-version="true" src="~/lib/bootstrap-star-rating/js/locales/@(CultureInfo.CurrentCulture.Name).js"></script>
     }

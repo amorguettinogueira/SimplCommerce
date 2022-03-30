@@ -163,4 +163,5 @@ PublishProfiles/
 logs/
 src/Modules/**/wwwroot/admin/*.min.js
 .vscode
-src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/site.min.css
+src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/site*.css
+src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/scss/.sass-cache/

@@ -1,8 +1,8 @@
 ﻿@model int
 
-<div class="cart-badge badge-icons pull-right">
-    <a href="~/cart"><i class="fa fa-shopping-cart"></i></a>
-    <span class="badge badge-sea rounded-x">@Model</span>
-    <div class="badge-open">
-    </div>
-</div>
+<a class="cart-badge position-relative" href="~/cart" style="top:0.5em">
+    <i class="fa fa-2x fa-shopping-cart" aria-hidden="true"></i>
+    <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">@Model
+        <span class="visually-hidden">itens no carrinho</span>
+    </span>
+</a>
