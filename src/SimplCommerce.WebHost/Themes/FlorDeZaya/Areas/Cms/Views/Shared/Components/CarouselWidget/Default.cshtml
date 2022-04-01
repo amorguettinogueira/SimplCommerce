@@ -1,40 +1,40 @@
 ﻿@model SimplCommerce.Module.Cms.Areas.Cms.ViewModels.CarouselWidgetViewComponentVm
 
-<div id="carousel@(Model.Id)" class="carousel slide" data-ride="carousel" data-interval="@Model.DataInterval">
-    <ol class="carousel-indicators">
+<div id="carousel@(Model.Id)" class="carousel slide" data-bs-ride="carousel" data-interval="@Model.DataInterval">
+    <div class="carousel-indicators">
         @for (int i = 0; i < Model.Items.Count; i++)
         {
             if (i == 0)
             {
-                <li data-target="#carousel@(Model.Id)" data-slide-to="0" class="active"></li>
+                <button type="button" data-bs-target="#carousel@(Model.Id)" data-bs-slide-to="0" class="active"></button>
             }
             else
             {
-                <li data-target="#carousel@(Model.Id)" data-slide-to="@i"></li>
+                <button type="button" data-bs-target="#carousel@(Model.Id)" data-bs-slide-to="@i"></button>
             }
         }
-    </ol>
-    <div class="carousel-inner">
-    @foreach (var item in Model.Items)
-    {
-        <div class="carousel-item @(item == Model.Items.First() ? "active" : null)">
-            <a href="@item.TargetUrl">
-                <img src="@item.Image" alt="@item.Caption" class="img-fluid" />
-                <div class="carousel-caption d-none d-md-block">
-                    <p>
-                        @item.Caption
-                    </p>
-                </div>
-            </a>
-        </div>
-    }
     </div>
-    <a class="carousel-control-prev" href="#carousel@(Model.Id)" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carousel@(Model.Id)" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+    <div class="carousel-inner">
+        @foreach (var item in Model.Items)
+        {
+            <div class="carousel-item @(item == Model.Items.First() ? "active" : null)">
+                <a href="@item.TargetUrl">
+                    @*<img src="@item.Image" alt="@item.Caption" class="img-fluid" />*@
+                    <div class="fz-image" style="height:45vh;background-image:url('@item.Image')"></div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 style="text-shadow:1px 1px #fff;">@item.Caption</h2>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel@(Model.Id)" data-bs-slide="prev">
+        <i class="fa-solid fa-caret-left fa-3x"></i>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel@(Model.Id)" data-bs-slide="next">
+        <i class="fa-solid fa-caret-right fa-3x"></i>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
+

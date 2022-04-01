@@ -14,81 +14,61 @@
     <a href="https://api.whatsapp.com/send?phone=5511997898054" class="a-float" target="_blank">
         <img src="/user-content/ZayaWhats.png" class="img-float" alt="Flor de Zaya">
     </a>
-    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand p-0" style="font-family:beauty_flowerregular;font-size:32px;position:absolute;top:0px" href="/">Flor de Zaya</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-between" id="navbarMain" style="margin-left:150px">
-                @await Component.InvokeAsync("CategoryMenu")
-                <ul class="form-inline m-0 pull-right navbar-nav">
-                    <partial name="_LoginPartial" />
-                </ul>
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark p-0 sticky-top shadow">
+        <div class="container justify-content-between">
+            <a class="navbar-brand p-0" style="font-family:beauty_flowerregular;font-size:32px" href="/">Flor de Zaya</a>
+            <div class="d-flex">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-ellipsis fa-xl"></i>
+                </button>
+                <div class="d-block d-lg-none ms-2">
+                    @await Component.InvokeAsync("CartBadge", new { top = .5 })
+                </div>
+            </div>
+            <div class="navbar-collapse justify-content-between row align-items-md-start collapse" id="navbarMain">
+                <div class="col-auto">
+                    @await Component.InvokeAsync("CategoryMenu")
+                </div>
+                <div class="col-auto">  
+                    <ul class="m-0 float-end navbar-nav">
+                        <partial name="_LoginPartial" />
+                        <li class="nav-item d-none d-lg-block" style="padding-top:1px">
+                            @await Component.InvokeAsync("CartBadge")
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    <div class="py-2 bg-secondary sticky-top">
+    <div class="py-2 bg-secondary">
         <div class="container">
             <div class="row">
                 <div class="col">                    
                     @await Component.InvokeAsync("SearchForm")
                 </div>
-                <div class="col-auto pull-right" style="margin-right:10px">
-                    @await Component.InvokeAsync("CartBadge")
-                </div>
             </div>
         </div>
     </div>
     <partial name="_CookieConsentPartial" />
-    <div class="container-fluid px-5 py-5 mx-auto">
-        @RenderBody()
-    </div>
+    @RenderBody()
     <div class="footer-content">
         <div class="container">
-            <div class="row" style="justify-content: space-evenly;">
-                <div class="col-auto">
-                    <h4>@Localizer["Customer Service"]</h4>
+            <div class="row justify-content-center">
+                <div class="col-auto px-3">
+                    <h4 class="text-center" style="font-size:17px;font-weight:600">@Localizer["Customer Service"]</h4>
                     <vc:menu menu-id="1"></vc:menu>
                 </div>
-                <div class="col-auto">
-                    <h4>@Localizer["Information"]</h4>
+                <div class="col-auto px-3">
+                    <h4 class="text-center" style="font-size:17px;font-weight:600">@Localizer["Information"]</h4>
                     <vc:menu menu-id="2"></vc:menu>
                 </div>
-                <div class="col-auto">
-                    <h4>Siga-nos</h4>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="https://www.instagram.com/flordezaya" target="_blank" title="Instagram">
-                                <i class="fa-brands fa-instagram-square fa-xl"></i>
-                                <span>Instagram</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/flordezaya" target="_blank" title="Facebook">
-                                <i class="fa-brands fa-facebook-square fa-xl"></i>
-                                <span>Facebook</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/" target="_blank" title="Youtube">
-                                <i class="fa-brands fa-youtube-square fa-xl"></i>
-                                <span>Youtube</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://api.whatsapp.com/send?phone=5511997898054" target="_blank" title="Youtube">
-                                <i class="fa-brands fa-whatsapp-square fa-xl"></i>
-                                <span>WhatsApp</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="mailto:contato@flordezaya.com.br" target="_blank" title="Youtube">
-                                <i class="fa-solid fa-square-envelope fa-xl"></i>
-                                <span>Email</span>
-                            </a>
-                        </li>
-                    </ul>
+            </div>
+            <div class="row justify-content-center" style="padding: 0 1rem  1rem  1rem">
+                <div class="col d-flex justify-content-evenly" style="max-width:30rem">
+                    <a class="text-decoration-none text-dark" style="font-size:2.2rem" href="https://www.instagram.com/flordezaya" target="_blank" title="Instagram"><i class="fa-brands fa-instagram-square"></i></a>
+                    <a class="text-decoration-none text-dark" style="font-size:2.2rem" href="https://www.facebook.com/flordezaya" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a class="text-decoration-none text-dark" style="font-size:2.2rem" href="https://api.whatsapp.com/send?phone=5511997898054" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp-square"></i></a>
+                    <a class="text-decoration-none text-dark" style="font-size:2.2rem" href="mailto:contato@flordezaya.com.br" target="_blank" title="Email"><i class="fa-solid fa-square-envelope"></i></a>
                 </div>
             </div>
         </div>
@@ -105,13 +85,11 @@
             </div>
         </div>
     </div>
-    <div class="bg-secondary">
+    <div class="bg-dark">
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <span class="pull-left py-2" style="font-size:14px;letter-spacing:1px">45.273.449/0001-61 Flor de Zaya Roupas Femininas &copy; 2022</span>
-                    <span class="pull-right py-2" style="font-size:14px;letter-spacing:1px">Desenvolvido por <a href="/"><strong>connexio</strong></a></span>
-                </div>
+            <div class="ftr-fnt">
+                <span class="ftr-fnt-left">45.273.449/0001-61&nbsp;&nbsp;<br class="ftr-brk"/>Flor de Zaya Roupas Femininas &copy; 2022</span>
+                <span class="ftr-fnt-right">Desenvolvido por <a href="/"><strong>connexio</strong></a></span>
             </div>
         </div>
     </div>

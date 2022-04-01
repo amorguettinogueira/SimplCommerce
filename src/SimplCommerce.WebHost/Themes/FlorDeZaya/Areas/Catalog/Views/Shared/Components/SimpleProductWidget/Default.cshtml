@@ -1,11 +1,10 @@
 ﻿@model SimplCommerce.Module.Catalog.Areas.Catalog.ViewModels.SimpleProductWidgetComponentVm
 
-<h2>@Model.WidgetName - Simple</h2>
-<div class="row product-list">
+<h2 class="mt-2">@Model.WidgetName | Simple</h2>
+
+<div class="row justify-content-between px-3 product-list">
     @foreach (var product in Model.Products)
     {
-        <div class="col-xs-6 col-md-3">
-            <partial name="/Areas/Catalog/Views/Shared/_ProductThumbnail.cshtml" model="product" />
-        </div>
+        <partial name="../../_ProductThumbnail.cshtml" model="product" />
     }
 </div>

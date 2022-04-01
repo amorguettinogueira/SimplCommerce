@@ -4,15 +4,35 @@
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "../bootstrap/scss/functions";
 
+//Flor de Zaya font name
+@font-face {
+    font-family: 'beauty_flowerregular';
+    src: url('./beauty-flower-font/beauty_flower-webfont.woff2') format('woff2'),
+         url('./beauty-flower-font/beauty_flower-webfont.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('./opensans/OpenSans-Regular.woff2') format('woff2'),
+        url('./opensans/OpenSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 // 2. Include any default variable overrides here
-$body-bg: #fcf7ff;
+$body-bg: #fdfbff;
 $body-color: #111;
 $headings-color: #111;
 $dark: #a81b44;
 $secondary: #f5c8cf;
 $nav-link-color: #fff !important;
+$navbar-toggler-padding-y: .5rem;
+$navbar-toggler-padding-x: .3rem;
 //$prefix: zf- !default;
-$font-family-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !default;
+$font-family-sans-serif: "Open Sans",Roboto,"Helvetica Neue",system-ui,-apple-system,"Segoe UI",Arial,"Noto Sans","Liberation Sans",sans-serif !default;
 //null variables
 $btn-font-family: $font-family-sans-serif;
 $dropdown-dark-box-shadow: 0 .5rem 1rem rgba(#000, .15) !default;
@@ -67,16 +87,7 @@ $zindex-sticky: 1020;
 @import "../bootstrap/scss/utilities/api";
 
 // 5. Add additional custom code here
-//Flor de Zaya font name
-@font-face {
-    font-family: 'beauty_flowerregular';
-    src: url('./beauty-flower-font/beauty_flower-webfont.woff2') format('woff2'),
-         url('./beauty-flower-font/beauty_flower-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-// floating whatsapp button
+//floating whatsapp button
 .a-float {
     position: fixed;
     width: 78px;
@@ -157,4 +168,167 @@ $zindex-sticky: 1020;
     background-clip: border-box;
     border: 1px solid #e6e4e9;
     border-radius: 8px;
+}
+
+// footer
+.footer-content{
+  padding: 3rem 3rem 0 3rem;
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-secondary-rgb),var(--bs-bg-opacity)) !important;
+}
+
+.ftr-fnt{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ftr-fnt-left, .ftr-fnt-right{
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  font-size:12px;
+  letter-spacing:1px;
+  float: left;
+  color: #fff;
+}
+
+.ftr-fnt-right{
+  float: right;
+}
+
+.ftr-brk{
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .ftr-brk{
+    display: block;
+  }
+
+  .ftr-fnt{
+    justify-content: center;
+  }
+
+  .ftr-fnt-left {
+    text-align: center;
+    margin-right: 0.25rem;
+  }
+
+  .ftr-fnt-right{
+    text-align: center;
+    margin-left: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  .ftr-fnt-left {
+    padding-bottom: 0px !important;
+  }
+
+  .ftr-fnt-right{
+    padding-top: 0px !important;
+  }
+}
+
+// product listing
+.fz-block {
+    position: relative;
+    width: 24%;
+    /*background-color: #4a4a4a;*/
+    padding: 1px;
+    margin-bottom: 90px;
+}
+
+@media screen and (max-width: 1399px) {
+    .fz-block {
+        margin-bottom: 100px;
+    }
+}
+
+@media screen and (max-width: 1309px) {
+    .fz-block {
+        width: 32%;
+    }
+}
+
+@media screen and (max-width: 1012px) {
+    .fz-block {
+        width: 49%;
+    }
+}
+
+@media screen and (max-width: 703px) {
+    .fz-block {
+        width: 100%;
+    }
+}
+
+.fz-image {
+    width:100%;
+    height:300px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+.fz-info {
+    position: absolute;
+    width: 98%;
+    top: 280px;
+    left: 1%;
+    background-color: #fff;
+    /*border: 1px solid #4a4a4a;*/
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fz-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #a81b44;
+    color: #fff;
+    border: 2px solid #a81b44;
+    cursor: pointer;
+    flex-grow: 1;
+    text-decoration: none !important;
+    padding: 0.25rem;
+}
+
+.fz-order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #a81b44;
+    border: 2px solid #a81b44;
+    cursor: pointer;
+    flex-grow: 1;
+    text-decoration: none !important;
+    padding: 0.25rem;
+}
+
+.fz-old-price {
+  font-size: 0.9rem;
+  margin-right:4px;
+  text-decoration: line-through;
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-danger-rgb),var(--bs-text-opacity)) !important;
+}
+
+.fz-discount {
+  font-size: 0.9rem;
+  margin-right:4px;
+  text-decoration: none;
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-danger-rgb),var(--bs-text-opacity)) !important;
+}
+
+.fz-discount::before {
+  content: "( ";
+}
+
+.fz-discount::after {
+  content: " )";
 }

@@ -1,27 +1,19 @@
 ﻿@model SimplCommerce.Module.Catalog.Areas.Catalog.ViewModels.ProductThumbnail
 
-<div class="block text-center add-to-cart">
+<div class="fz-block text-center add-to-cart">
     <form class="inline">
         <input type="hidden" name="productId" value="@Model.Id" />
-        <div class="image" style="background-image: url(@Model.ThumbnailUrl);transform: rotate(0);">
+        <div class="fz-image" style="background-image: url(@Model.ThumbnailUrl);transform: rotate(0);">
             <a class="stretched-link" href="~/@Model.Slug"></a>
         </div>
-        <div class="info">
+        <div class="fz-info">
             <div class="flex-column d-flex flex-column">
-@*              <div class="cart">
-                    <button type="button" class="mb-0 sm-font">@Localizer["Add to cart"]</button>
-                    <!--button type="button" class="btn btn-lg btn-add-cart"></!--button-->
-                </div>*@
-                <button type="button" class="cart dflex-center btn-add-cart"><i class="fa-solid fa-cart-plus fa-xl"></i></button>
-                <a class="order dflex-center add-to-wishlist" href="#"><i class="fa-solid fa-face-grin-hearts fa-xl"></i></a>
-@*                <div class="order">
-                    <a class="mb-0 sm-font" href="#">@Localizer["Add to Wishlist"]</a>
-                    <!--a href="#" class="add-to-wishlist"></!--a-->
-                </div>*@
+                <a class="fz-cart btn-add-cart"><i class="fa-solid fa-cart-plus fa-xl"></i></a>
+                <a class="fz-order add-to-wishlist" href="#"><i class="fa-solid fa-face-grin-hearts fa-xl"></i></a>
             </div>
             <div class="flex-column d-flex flex-column flex-grow-1" style="transform: rotate(0);">
                 <div class="text-left">
-                    <a class="stretched-link" href="~/@Model.Slug"><h5 class="mb-0 mt-2">@Model.Name</h5></a>
+                    <a class="stretched-link text-decoration-none" href="~/@Model.Slug"><h5 class="mb-0 mt-2">@Model.Name</h5></a>
                     <small class="text-muted mb-1">Men's Stylish Designed Shirt</small>
                 </div>
                 @*<div class="col-auto pull-left">*@
@@ -31,14 +23,20 @@
                     }
                     else
                     {
-                        <h5>@Model.CalculatedProductPrice.PriceString</h5>
-                        if (Model.CalculatedProductPrice.PercentOfSaving > 0)
+                        <h5>
+                        @if (Model.CalculatedProductPrice.PercentOfSaving > 0)
                         {
-                            <p class="text-muted ml-2"><del>@Model.CalculatedProductPrice.OldPriceString</del>&nbsp;-@Model.CalculatedProductPrice.PercentOfSaving%</p>
+                            <span class="fz-old-price">@Model.CalculatedProductPrice.OldPriceString</span>
                         }
+                        @Model.CalculatedProductPrice.PriceString
+                        @if (Model.CalculatedProductPrice.PercentOfSaving > 0)
+                        {
+                            <span class="fz-discount">-@Model.CalculatedProductPrice.PercentOfSaving%</span>
+                        }
+                        </h5>
                     }
 @*                </div>
-                <div class="col-auto pull-right">
+                <div class="col-auto float-end">
                     <ul class="list-inline product-ratings">
                         <li><input type="hidden" value="@Model.RatingAverage" readonly="readonly" class="rating-loading" step="1" data-size="xs" data-show-clear="false" data-show-caption="false" /></li>
                         @if (Model.ReviewsCount > 0)

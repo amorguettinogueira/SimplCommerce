@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<SimplCommerce.Module.Cms.Areas.Cms.ViewModels.MenuItemVm>
 
-<ul class="list-unstyled">
+<ul class="list-unstyled" style="font-size:15px">
     @foreach (var item in Model)
     {
-        <li>
+        <li class="text-center">
             <a href="@item.Link">@item.Name</a>
              @if (item.ChildItems.Any())
              {
                 <ul>
                     @foreach (var childItem in item.ChildItems)
                     {
-                        <li><a href="@childItem.Link">@childItem.Name</a></li>
+                        <li class="text-center"><a href="@childItem.Link">@childItem.Name</a></li>
                     }
                 </ul>
              }
