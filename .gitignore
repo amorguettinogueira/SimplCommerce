@@ -165,3 +165,4 @@ src/Modules/**/wwwroot/admin/*.min.js
 .vscode
 src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/site*.css
 src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/scss/.sass-cache/
+src/SimplCommerce.WebHost/wwwroot/themes/FlorDeZaya/bootstrap/.git
