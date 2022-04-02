@@ -13,19 +13,12 @@
     <link simpl-append-version="true" rel="stylesheet" href="~/lib/nouislider/distribute/nouislider.min.css" />
 }
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="~/">Home</a></li>
-        @if (Model.ParentCategorId.HasValue)
-        {
-            @await Component.InvokeAsync("CategoryBreadcrumb", new { categoryId = Model.ParentCategorId.Value })
-        }
-        <li class="breadcrumb-item active">@Model.CategoryName</li>
-    </ol>
-</nav>
-<div class="row">
-    <div class="col-md-3 product-list-filters">
-        <h3>@Localizer["Filter by"]</h3>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="filter_products" aria-labelledby="filter_productsLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Filter by"]</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
         <form id="productFilter" name="productFilter" method="GET" action="~/@Model.CategorySlug">
             @if (Model.FilterOption.Categories.Where(x => x.ParentId == Model.CategoryId).Any())
             {
@@ -129,59 +122,68 @@
                 </div>
             }
         </form>
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Sort by:"]</h5>
     </div>
-    <div class="col-md-9">
-        <div class="row mb-3">
-            <div class="col-sm-6 category-result">
-                <h2>@Model.CategoryName</h2>
-                <small class="badge-results">@Model.TotalProduct @Localizer["results"]</small>
-            </div>
-            <div class="col-sm-6">
-                <ul class="list-inline clear-both product-list-display-options">
-                    <li class="sort-by">
-                        <label>@Localizer["Sort by:"]</label>
-                        <div class="btn-group">
-                            <select asp-for="CurrentSearchOption.Sort" asp-items="Model.AvailableSortOptions" class="form-control"></select>
-                        </div>
-                    </li>
-                    @*<li class="pagination-option">
-                            <label>Show :</label>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    20 <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">All</a></li>
-                                    <li><a href="#">50</a></li>
-                                    <li><a href="#">30</a></li>
-                                </ul>
-                            </div>
-                        </li>*@
+    <div class="btn-group">
+        <select asp-for="CurrentSearchOption.Sort" asp-items="Model.AvailableSortOptions" class="form-control"></select>
+    </div>
+    @*<li class="pagination-option">
+            <label>Show :</label>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    20 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">All</a></li>
+                    <li><a href="#">50</a></li>
+                    <li><a href="#">30</a></li>
                 </ul>
             </div>
+        </li>*@
+    </div>
+</div>
+
+<div class="container-fluid p-sm-3 p-md-4 p-lg-5 mx-auto" style="padding-top:1rem !important">
+    <div class="d-flex flex-row flex-wrap align-items-center justify-content-between mb-2">
+        <div class="flex-col d-flex align-items-center">
+            <nav>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="~/">Home</a></li>
+                        @if (Model.ParentCategorId.HasValue)
+                        {
+                            @await Component.InvokeAsync("CategoryBreadcrumb", new { categoryId = Model.ParentCategorId.Value })
+                        }
+                    <li class="breadcrumb-item active">@Model.CategoryName</li>
+                </ol>
+            </nav>
         </div>
-        <div class="row product-list">
-            @foreach (var product in Model.Products)
-            {
-                <div class="col-xs-6 col-md-4">
-                    <partial name="_ProductThumbnail" model="product" />
-                </div>
-            }
+        <div class="flex-col d-flex align-items-center">
+            <h2 class="m-0">@Model.CategoryName</h2><small class="badge-results ms-2">@Model.TotalProduct @Localizer["results"]</small>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <cs-pager cs-paging-pagesize="@Model.CurrentSearchOption.PageSize"
-                          cs-paging-pagenumber="@Model.CurrentSearchOption.Page"
-                          cs-paging-totalitems="@Model.TotalProduct"
-                          cs-pagenumber-param="page"
-                          asp-basehref="~/@Model.CategorySlug"
-                          asp-all-route-data="@Model.CurrentSearchOption.ToDictionary()"
-                          cs-pager-li-current-class="page-item active"
-                          cs-pager-li-other-class="page-item"
-                          cs-pager-li-non-active-class="page-item disabled"
-                          cs-pager-link-current-class="page-link"
-                          cs-pager-link-other-class="page-link"></cs-pager>
-            </div>
+        <div class="flex-col">
+            <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#filter_products" aria-controls="filter_products"><span class="d-none d-sm-inline me-2">Filtrar</span><i class="fa-solid fa-filter"></i></button>
+        </div>
+    </div>
+    <div class="row justify-content-between px-3 product-list">
+        @foreach (var product in Model.Products)
+        {
+            <partial name="../Shared/_ProductThumbnail.cshtml" model="product" />
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <cs-pager cs-paging-pagesize="@Model.CurrentSearchOption.PageSize"
+                        cs-paging-pagenumber="@Model.CurrentSearchOption.Page"
+                        cs-paging-totalitems="@Model.TotalProduct"
+                        cs-pagenumber-param="page"
+                        asp-basehref="~/@Model.CategorySlug"
+                        asp-all-route-data="@Model.CurrentSearchOption.ToDictionary()"
+                        cs-pager-li-current-class="page-item active"
+                        cs-pager-li-other-class="page-item"
+                        cs-pager-li-non-active-class="page-item disabled"
+                        cs-pager-link-current-class="page-link"
+                        cs-pager-link-other-class="page-link"></cs-pager>
         </div>
     </div>
 </div>

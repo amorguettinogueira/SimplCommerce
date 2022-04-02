@@ -31,6 +31,7 @@ $secondary: #f5c8cf;
 $nav-link-color: #fff !important;
 $navbar-toggler-padding-y: .5rem;
 $navbar-toggler-padding-x: .3rem;
+$breadcrumb-divider: quote(">");
 //$prefix: zf- !default;
 $font-family-sans-serif: "Open Sans",Roboto,"Helvetica Neue",system-ui,-apple-system,"Segoe UI",Arial,"Noto Sans","Liberation Sans",sans-serif !default;
 //null variables
@@ -92,8 +93,8 @@ $zindex-sticky: 1020;
     position: fixed;
     width: 78px;
     height: 60px;
-    bottom: 40px;
-    right: 40px;
+    bottom: 2rem;
+    right: 1rem;
     filter: drop-shadow(4px 3px 3px #999);
     z-index: 100;
 }
@@ -331,4 +332,24 @@ $zindex-sticky: 1020;
 
 .fz-discount::after {
   content: " )";
+}
+
+//scroll top button
+#btn-back-to-top {
+  position: fixed;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+//social media buttons
+.btn-sc-media {
+  text-decoration: none !important;
+  color: $dark !important;
+  font-size:2.2rem;
+}
+
+.btn-sc-media:hover {
+  color: #fff !important;
 }
