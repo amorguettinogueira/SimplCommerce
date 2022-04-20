@@ -41,6 +41,15 @@ $breadcrumb-bg: $body-bg !default;
 $breadcrumb-border-radius: .375rem !default;
 $toast-color: #fff !default;
 $zindex-sticky: 1020;
+//accordion
+$accordion-color:                         #000;
+$accordion-bg:                            #fff;
+$accordion-button-color:                  #000;
+$accordion-button-bg:                     $body-bg;
+$accordion-button-active-bg:              $secondary;
+$accordion-button-active-color:           $dark;
+$accordion-icon-color:                    $accordion-button-color;
+$accordion-icon-active-color:             $accordion-button-active-color;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../bootstrap/scss/variables";
@@ -235,9 +244,10 @@ $zindex-sticky: 1020;
 // product listing
 .fz-block {
     position: relative;
-    width: 24%;
+    flex: 0 0 auto;
+    width: 25%;
     /*background-color: #4a4a4a;*/
-    padding: 1px;
+    padding: 4px;
     margin-bottom: 90px;
 }
 
@@ -249,19 +259,22 @@ $zindex-sticky: 1020;
 
 @media screen and (max-width: 1309px) {
     .fz-block {
-        width: 32%;
+        width: 33%;
+        @include row-cols(3);
     }
 }
 
 @media screen and (max-width: 1012px) {
     .fz-block {
-        width: 49%;
+        width: 50%;
+        @include row-cols(2);
     }
 }
 
 @media screen and (max-width: 703px) {
     .fz-block {
         width: 100%;
+        @include row-cols(1);
     }
 }
 
@@ -352,4 +365,34 @@ $zindex-sticky: 1020;
 
 .btn-sc-media:hover {
   color: #fff !important;
+}
+
+//search & category offcanvas
+#priceSlider{
+  padding: 0 0 0 16px;
+  height: 10px;
+}
+
+#priceSlider .noUi-connect {
+  background: $dark;
+}
+
+#priceSlider .noUi-handle {
+  height: 18px;
+  width: 18px;
+  top: -5px;
+  right: -9px; /* half the width */
+  border-radius: 9px;
+}
+
+#priceSlider .noUi-handle:after, #priceSlider .noUi-handle:before{
+  content: none !important;
+}
+
+#priceSlider .noUi-tooltip {
+  display: none;
+}
+
+#priceSlider .noUi-active .noUi-tooltip {
+  display: block;
 }

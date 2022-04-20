@@ -2,7 +2,7 @@
 
 <h2 class="mt-2">@Model.WidgetName</h2>
 
-<div class="row justify-content-between px-3 product-list">
+<div class="row px-3 product-list">
     @foreach (var product in Model.Products)
     {
         <partial name="../../_ProductThumbnail.cshtml" model="product" />

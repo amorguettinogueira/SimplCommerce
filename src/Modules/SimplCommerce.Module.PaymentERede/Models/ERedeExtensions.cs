@@ -29,9 +29,7 @@ namespace SimplCommerce.Module.PaymentERede.Models
                 if (p > -1)
                 {
                     if (i == p)
-                    {
                         return value;
-                    }
                     else
                     {
                         Array.Resize(ref charValues, p + 1);

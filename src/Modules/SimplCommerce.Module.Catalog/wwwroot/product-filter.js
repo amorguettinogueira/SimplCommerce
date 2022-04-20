@@ -36,14 +36,16 @@
 
             noUiSlider.create(priceSlider, {
                 connect: true,
+                tooltips: true,
+                step: 5,
                 start: [priceSetting.currentMin, priceSetting.currentMax],
                 range: {
                     'min': priceSetting.min,
                     'max': priceSetting.max
                 },
                 format: wNumb({
-                    decimals: 3,
-                    thousand: '.'
+                    decimals: 0,
+                    prefix: 'R$'
                 })
             });
 
@@ -54,8 +56,8 @@
             priceSlider.noUiSlider.on('change', function () {
                 var min, max, prices;
                 prices = priceSlider.noUiSlider.get();
-                min = parseInt(prices[0].replace(/\./g, ''), 10);
-                max = parseInt(prices[1].replace(/\./g, ''), 10);
+                min = parseInt(prices[0].replace(/[^0-9]/g, ''), 10);
+                max = parseInt(prices[1].replace(/[^0-9]/g, ''), 10);
                 if (min !== priceSetting.min) {
                     currentSearchOption.minPrice = min;
                 } else {
@@ -74,7 +76,7 @@
             var index,
                 checkbox = $(this),
                 brand = checkbox.val(),
-                brands = currentSearchOption.brand ? currentSearchOption.brand.split('--') :[];
+                brands = currentSearchOption.brand ? currentSearchOption.brand.split('--') : [];
             if (checkbox.prop("checked") === true) {
                 brands.push(brand);
             } else {
@@ -103,6 +105,11 @@
         });
 
         $('.sort-by select').on('change', function () {
+            currentSearchOption.sort = $(this).val();
+            window.location = createUrl();
+        });
+
+        $('.sort-by input[type=radio]').on('change', function () {
             currentSearchOption.sort = $(this).val();
             window.location = createUrl();
         });

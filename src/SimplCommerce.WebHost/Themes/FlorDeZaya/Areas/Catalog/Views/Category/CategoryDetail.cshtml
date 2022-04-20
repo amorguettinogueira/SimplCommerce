@@ -15,135 +15,119 @@
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="filter_products" aria-labelledby="filter_productsLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Filter by"]</h5>
+        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Options"]</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <form id="productFilter" name="productFilter" method="GET" action="~/@Model.CategorySlug">
+        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Filter by"]</h5>
+        <form id="productFilter" name="productFilter" method="GET" action="~/@Model.CategorySlug" class="accordion accordion-flush">
             @if (Model.FilterOption.Categories.Where(x => x.ParentId == Model.CategoryId).Any())
             {
-                <div id="accordion-category">
-                    <div class="card">
-                        <div class="card-header" id="cardHeaderCategory">
-                            <h5 class="mb-0">
-                                <a data-toggle="collapse" href="#collapse-category" aria-expanded="true" aria-controls="collapse-category">
-                                    @Localizer["Category"]
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="collapse-category" class="collapse show" aria-labelledby="cardHeaderCategory" data-parent="#accordion-category">
-                            <div class="card-body">
-                                <ul class="list-unstyled checkbox-list">
-                                    @foreach (var category in Model.FilterOption.Categories.Where(x => x.ParentId == Model.CategoryId))
-                                    {
-                                        <li>
-                                            <label class="checkbox">
-                                                <input type="checkbox" value="@category.Slug" name="category" checked="@Model.CurrentSearchOption.GetCategories().Contains(category.Slug)">
-                                                @category.Name
-                                                <small>(@category.Count)</small>
-                                            </label>
-                                            @{ var children = Model.FilterOption.Categories.Where(x => x.ParentId == category.Id); }
-                                            @if (children.Any())
-                                            {
-                                                <ul class="list-unstyled checkbox-list">
-                                                    @foreach (var child in children)
-                                                    {
-                                                        <li>
-                                                            <label class="checkbox">
-                                                                <input type="checkbox" value="@child.Slug" name="category" checked="@Model.CurrentSearchOption.GetCategories().Contains(child.Slug)">
-                                                                @child.Name
-                                                                <small>(@child.Count)</small>
-                                                            </label>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            }
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-            <div id="accordion-brand" class="mt-4">
-                <div class="card">
-                    <div class="card-header" id="cardBrandHeader">
-                        <h5 class="mb-0">
-                            <a data-toggle="collapse" href="#collapse-brand" aria-expanded="true" aria-controls="collapse-brand">
-                                @Localizer["Brand"]
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                        </h5>
-                    </div>
-                    <div id="collapse-brand" class="collapse show" aria-labelledby="cardBrandHeader" data-parent="#accordion-brand">
-                        <div class="card-body">
+                <div id="accordion-category" class="accordion-item">
+                    <h2 class="accordion-header" id="cardHeaderCategory">
+                        <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-category">
+                        @Localizer["Category"]
+                        </button>
+                    </h2>
+                    <div id="collapse-category" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
                             <ul class="list-unstyled checkbox-list">
-                                @foreach (var brand in Model.FilterOption.Brands)
+                                @foreach (var category in Model.FilterOption.Categories.Where(x => x.ParentId == Model.CategoryId))
                                 {
                                     <li>
                                         <label class="checkbox">
-                                            <input type="checkbox" value="@brand.Slug" name="brand" checked="@Model.CurrentSearchOption.GetBrands().Contains(brand.Slug)">
-                                            @brand.Name
-                                            <small>(@brand.Count)</small>
+                                            <input type="checkbox" value="@category.Slug" name="category" checked="@Model.CurrentSearchOption.GetCategories().Contains(category.Slug)">
+                                            @category.Name
+                                            <small>(@category.Count)</small>
                                         </label>
+                                        @{ var children = Model.FilterOption.Categories.Where(x => x.ParentId == category.Id); }
+                                        @if (children.Any())
+                                        {
+                                            <ul class="list-unstyled checkbox-list mb-0">
+                                                @foreach (var child in children)
+                                                {
+                                                    <li>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" value="@child.Slug" name="category" checked="@Model.CurrentSearchOption.GetCategories().Contains(child.Slug)">
+                                                            @child.Name
+                                                            <small>(@child.Count)</small>
+                                                        </label>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
                                     </li>
                                 }
                             </ul>
                         </div>
                     </div>
                 </div>
+            }
+            <div id="accordion-brand" class="accordion-item">
+                <h2 class="accordion-header" id="cardBrandHeader">
+                    <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-brand">
+                        @Localizer["Brand"]
+                    </button>
+                </h2>
+                <div id="collapse-brand" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <ul class="list-unstyled checkbox-list">
+                            @foreach (var brand in Model.FilterOption.Brands)
+                            {
+                                <li>
+                                    <label class="checkbox">
+                                        <input type="checkbox" value="@brand.Slug" name="brand" checked="@Model.CurrentSearchOption.GetBrands().Contains(brand.Slug)">
+                                        @brand.Name
+                                        <small>(@brand.Count)</small>
+                                    </label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
             @if (Model.FilterOption.Price.MaxPrice != Model.FilterOption.Price.MinPrice)
             {
-                <div id="accordion-price" class="mt-4">
-                    <div class="card">
-                        <div class="card-header" id="cardHeaderPrice">
-                            <h5 class="mb-0">
-                                <a data-toggle="collapse" href="#collapse-price" aria-expanded="true" aria-controls="collapse-price">
-                                    @Localizer["Price"]
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="collapse-price" class="collapse show" aria-labelledby="cardHeaderPrice" data-parent="#accordion-price">
-                            <div class="card-body">
-                                <div id="priceSlider"></div>
-                                <div>
-                                    <input type="hidden" id="originMinPrice" value="@Model.FilterOption.Price.MinPrice.ToString("F0")" />
-                                    <input type="hidden" id="originMaxPrice" value="@Model.FilterOption.Price.MaxPrice.ToString("F0")" />
-                                    <span id="minPrice"></span>
-                                    <span id="maxPrice"></span>
-                                </div>
+                <div id="accordion-price" class="accordion-item">
+                    <h2 class="accordion-header" id="cardHeaderPrice">
+                        <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-price">
+                            @Localizer["Price"]
+                        </button>
+                    </h2>
+                    <div id="collapse-price" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div id="priceSlider"></div>
+                            <div class="d-flex justify-content-between pt-1">
+                                <input type="hidden" id="originMinPrice" value="@Model.FilterOption.Price.MinPrice.ToString("F0")" />
+                                <input type="hidden" id="originMaxPrice" value="@Model.FilterOption.Price.MaxPrice.ToString("F0")" />
+                                <span id="minPrice"></span><span id="maxPrice"></span>
                             </div>
                         </div>
                     </div>
                 </div>
             }
-        </form>
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Sort by:"]</h5>
-    </div>
-    <div class="btn-group">
-        <select asp-for="CurrentSearchOption.Sort" asp-items="Model.AvailableSortOptions" class="form-control"></select>
-    </div>
-    @*<li class="pagination-option">
-            <label>Show :</label>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    20 <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">All</a></li>
-                    <li><a href="#">50</a></li>
-                    <li><a href="#">30</a></li>
-                </ul>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="cardHeaderSort">
+                    <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-sort">
+                        @Localizer["Sort by:"]
+                    </button>
+                </h2>
+                <div id="collapse-sort" class="accordion-collapse collapse show">
+                    <div class="accordion-body sort-by">
+                        @for (var i = 0; i < Model.AvailableSortOptions.Count; i++)
+                        {
+                            var shouldChecked = (i == 0 && string.IsNullOrEmpty(Model.CurrentSearchOption.Sort)) || Model.CurrentSearchOption.Sort == Model.AvailableSortOptions[i].Value;
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="CurrentSearchOption_Sort_@i" name="CurrentSearchOption.Sort" value="@Model.AvailableSortOptions[i].Value" checked="@shouldChecked">
+                                <label class="form-check-label" for="CurrentSearchOption_Sort_@i">@Localizer[Model.AvailableSortOptions[i].Text]</label>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
-        </li>*@
+        </form>
     </div>
 </div>
-
 <div class="container-fluid p-sm-3 p-md-4 p-lg-5 mx-auto" style="padding-top:1rem !important">
     <div class="d-flex flex-row flex-wrap align-items-center justify-content-between mb-2">
         <div class="flex-col d-flex align-items-center">
@@ -165,7 +149,7 @@
             <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#filter_products" aria-controls="filter_products"><span class="d-none d-sm-inline me-2">Filtrar</span><i class="fa-solid fa-filter"></i></button>
         </div>
     </div>
-    <div class="row justify-content-between px-3 product-list">
+    <div class="row px-3 product-list">
         @foreach (var product in Model.Products)
         {
             <partial name="../Shared/_ProductThumbnail.cshtml" model="product" />
