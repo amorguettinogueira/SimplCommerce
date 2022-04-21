@@ -260,21 +260,18 @@ $accordion-icon-active-color:             $accordion-button-active-color;
 @media screen and (max-width: 1309px) {
     .fz-block {
         width: 33%;
-        @include row-cols(3);
     }
 }
 
 @media screen and (max-width: 1012px) {
     .fz-block {
         width: 50%;
-        @include row-cols(2);
     }
 }
 
 @media screen and (max-width: 703px) {
     .fz-block {
         width: 100%;
-        @include row-cols(1);
     }
 }
 
@@ -395,4 +392,11 @@ $accordion-icon-active-color:             $accordion-button-active-color;
 
 #priceSlider .noUi-active .noUi-tooltip {
   display: block;
+}
+//product details
+.prd-img-container{
+  width: 50%;
+}
+.prd-dtl-container{
+  width: 50%;
 }

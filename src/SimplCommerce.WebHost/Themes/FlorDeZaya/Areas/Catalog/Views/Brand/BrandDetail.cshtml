@@ -7,22 +7,24 @@
     <link simpl-append-version="true" rel="stylesheet" href="~/lib/nouislider/distribute/nouislider.min.css" />
 }
 
-<div class="row">
-    <div class="col-md-3 product-list-filters">
-        <h3>@Localizer["Filter by"]</h3>
-        <form id="productFilter" name="productFilter" method="GET" action="~/@Model.BrandSlug">
-            <div id="accordion-category">
-                <div class="card">
-                    <div class="card-header" id="cardHeaderCategory">
-                        <h5 class="mb-0">
-                            <a data-toggle="collapse" href="#collapse-category" aria-expanded="true" aria-controls="collapse-category">
-                                @Localizer["Category"]
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                        </h5>
-                    </div>
-                    <div id="collapse-category" class="collapse show" aria-labelledby="cardHeaderCategory" data-parent="#accordion-category">
-                        <div class="card-body">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="filter_products" aria-labelledby="filter_productsLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Options"]</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <h5 class="offcanvas-title" id="filter_productsLabel">@Localizer["Filter by"]</h5>
+        <form id="productFilter" name="productFilter" method="GET" action="~/@Model.BrandSlug" class="accordion accordion-flush">
+            @if (Model.FilterOption.Categories.Where(x => x.ParentId == null).Any())
+            {
+                <div id="accordion-category" class="accordion-item">
+                    <h2 class="accordion-header" id="cardHeaderCategory">
+                        <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-category">
+                        @Localizer["Category"]
+                        </button>
+                    </h2>
+                    <div id="collapse-category" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
                             <ul class="list-unstyled checkbox-list">
                                 @foreach (var category in Model.FilterOption.Categories.Where(x => x.ParentId == null))
                                 {
@@ -35,7 +37,7 @@
                                         @{ var children = Model.FilterOption.Categories.Where(x => x.ParentId == category.Id); }
                                         @if (children.Any())
                                         {
-                                            <ul class="list-unstyled checkbox-list">
+                                            <ul class="list-unstyled checkbox-list mb-0">
                                                 @foreach (var child in children)
                                                 {
                                                     <li>
@@ -54,81 +56,67 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            }
             @if (Model.FilterOption.Price.MaxPrice != Model.FilterOption.Price.MinPrice)
             {
-                <div id="accordion-price" class="mt-4">
-                    <div class="card">
-                        <div class="card-header" id="cardHeaderPrice">
-                            <h5 class="mb-0">
-                                <a data-toggle="collapse" href="#collapse-price" aria-expanded="true" aria-controls="collapse-price">
-                                    @Localizer["Price"]
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="collapse-price" class="collapse show" aria-labelledby="cardHeaderPrice" data-parent="#accordion-price">
-                            <div class="card-body">
-                                <div id="priceSlider"></div>
-                                <div>
-                                    <input type="hidden" id="originMinPrice" value="@Model.FilterOption.Price.MinPrice.ToString("F0")" />
-                                    <input type="hidden" id="originMaxPrice" value="@Model.FilterOption.Price.MaxPrice.ToString("F0")" />
-                                    <span id="minPrice"></span>
-                                    <span id="maxPrice"></span>
-                                </div>
+                <div id="accordion-price" class="accordion-item">
+                    <h2 class="accordion-header" id="cardHeaderPrice">
+                        <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-price">
+                            @Localizer["Price"]
+                        </button>
+                    </h2>
+                    <div id="collapse-price" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div id="priceSlider"></div>
+                            <div class="d-flex justify-content-between pt-1">
+                                <input type="hidden" id="originMinPrice" value="@Model.FilterOption.Price.MinPrice.ToString("F0")" />
+                                <input type="hidden" id="originMaxPrice" value="@Model.FilterOption.Price.MaxPrice.ToString("F0")" />
+                                <span id="minPrice"></span><span id="maxPrice"></span>
                             </div>
                         </div>
                     </div>
                 </div>
             }
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="cardHeaderSort">
+                    <button class="accordion-button open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-sort">
+                        @Localizer["Sort by:"]
+                    </button>
+                </h2>
+                <div id="collapse-sort" class="accordion-collapse collapse show">
+                    <div class="accordion-body sort-by">
+                        @for (var i = 0; i < Model.AvailableSortOptions.Count; i++)
+                        {
+                            var shouldChecked = (i == 0 && string.IsNullOrEmpty(Model.CurrentSearchOption.Sort)) || Model.CurrentSearchOption.Sort == Model.AvailableSortOptions[i].Value;
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="CurrentSearchOption_Sort_@i" name="CurrentSearchOption.Sort" value="@Model.AvailableSortOptions[i].Value" checked="@shouldChecked">
+                                <label class="form-check-label" for="CurrentSearchOption_Sort_@i">@Localizer[Model.AvailableSortOptions[i].Text]</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
-    <div class="col-md-9">
-        <div class="row mb-3">
-            <div class="col-sm-6 category-result">
-                <h2>@Model.BrandName</h2>
-                <small class="badge-results">@Model.TotalProduct @Localizer["results"]</small>
-            </div>
-            <div class="col-sm-6">
-                <ul class="list-inline clear-both product-list-display-options">
-                    <li class="sort-by">
-                        <label>@Localizer["Sort by:"]</label>
-                        <div class="btn-group">
-                            <select asp-for="CurrentSearchOption.Sort" class="form-control">
-                                @foreach (var sortOption in Model.AvailableSortOptions)
-                                {
-                                    <option value="@sortOption.Value">@Localizer[sortOption.Text]</option>
-                                }
-                            </select>
-                        </div>
-                    </li>
-                    @*<li class="pagination-option">
-                            <label>Show :</label>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    20 <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">All</a></li>
-                                    <li><a href="#">50</a></li>
-                                    <li><a href="#">30</a></li>
-                                </ul>
-                            </div>
-                        </li>*@
-                </ul>
-            </div>
+</div>
+<div class="container-fluid p-sm-3 p-md-4 p-lg-5 mx-auto" style="padding-top:1rem !important">
+    <div class="d-flex flex-row flex-wrap align-items-center justify-content-between mb-2">
+        <div class="flex-col d-flex align-items-center">
+            <h2 class="m-0">@Model.BrandName</h2><small class="badge-results ms-2">@Model.TotalProduct @Localizer["results"]</small>
         </div>
-        <div class="row product-list">
-            @foreach (var product in Model.Products)
-            {
-                <div class="col-xs-6 col-md-4">
-                    <partial name="_ProductThumbnail" model="product" />
-                </div>
-            }
+        <div class="flex-col">
+            <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#filter_products" aria-controls="filter_products"><span class="d-none d-sm-inline me-2">Filtrar</span><i class="fa-solid fa-filter"></i></button>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <cs-pager cs-paging-pagesize="@Model.CurrentSearchOption.PageSize"
+    </div>
+    <div class="row px-3 product-list">
+        @foreach (var product in Model.Products)
+        {
+            <partial name="../Shared/_ProductThumbnail.cshtml" model="product" />
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <cs-pager cs-paging-pagesize="@Model.CurrentSearchOption.PageSize"
                           cs-paging-pagenumber="@Model.CurrentSearchOption.Page"
                           cs-paging-totalitems="@Model.TotalProduct"
                           cs-pagenumber-param="page"
@@ -139,7 +127,6 @@
                           cs-pager-li-non-active-class="page-item disabled"
                           cs-pager-link-current-class="page-link"
                           cs-pager-link-other-class="page-link"></cs-pager>
-            </div>
         </div>
     </div>
 </div>
